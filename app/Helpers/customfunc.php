@@ -28,6 +28,17 @@ class customfunc
 
         return collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>$woeid]))[0]->trends)->sort()->take(5)->implode('name', ', ');
     }
+    
+    public static function getTrendingKe(){
+        $tweetText= SELF::getRandomQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#Caturday,#CatLove,#Purrrr";
+        woeid::create([
+            'loc'=>'kenya',
+            'tweet'=>$tweetText,
+            'status'=>0
+        ]);
+
+        return $tweetText;
+    }
 
     public static function getTrendingRandom(){
         $loc=SELF::getTrendLocations();
@@ -44,7 +55,7 @@ class customfunc
             'tweet'=>$tweetText,
             'status'=>0
         ]);
-        return $tweetText.PHP_EOL.SELF::getTrendingByWoeid($loc->woeid);
+        return $tweetText.PHP_EOL.SELF::getTrendingByWoeid($loc->woeid).",#Caturday,#CatLove,#Purrrr";
     }
 
     public static function getCountryLanguage($countrycode="KE"){
@@ -90,7 +101,7 @@ class customfunc
 
     public static function getWorldTweetText(){
 
-        $tweetText=SELF::getRandomQuote().PHP_EOL.SELF::getWorldwideTrending();
+        $tweetText=SELF::getRandomQuote().PHP_EOL.SELF::getWorldwideTrending().",#Caturday,#CatLove,#Purrrr";
         woeid::create([
             'loc'=>'worldwide',
             'tweet'=>$tweetText,
@@ -104,15 +115,21 @@ class customfunc
     }
 
     public static function getTweetText(){
-        $lastTweet=woeid::all()->last();
+        $Tweets=woeid::all()->sortByDesc('created_at')->take(2);
 
-        if(!isset($lastTweet)){return SELF::getWorldTweetText();}
-
-        $diff=Carbon::parse($lastTweet->updated_at)->diffInHours(Carbon::now());
-
+        $lastTweet=$Tweets->last();
+        //dd($lastTweet);
+        if(!isset($Tweets)){return SELF::getWorldTweetText();}
+        
+        $diff=Carbon::parse($lastTweet->created_at)->diffInHours(Carbon::now());
+        
         if($diff>=2){
             return SELF::getWorldTweetText();
         }else{
+            $hasKe=$Tweets->pluck('loc')->values()->contains('kenya');
+            if(!$hasKe){
+                return SELF::getTrendingKe();
+            }
             return SELF::getCountryTweetText();
 
         }

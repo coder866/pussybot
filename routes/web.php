@@ -49,7 +49,7 @@ Route::get('/getTrends', function()
 });
 
 Route::get('/art',function(){
-    dd(Purr::getTrendLocations());
+    dd(Purr::getTrendingKe());
 });
 Route::get('/wt',function(){
     dd(Purr::getWorldwideTrending());
@@ -81,3 +81,11 @@ Route::get('/getKitten', [\App\Http\Controllers\pussyController::class,'store'])
 // sudo supervisorctl reread
 // sudo supervisorctl update
 // sudo supervisorctl start pussybot-worker:*
+
+// php artisan cache:clear;
+// php artisan view:clear;
+// php artisan route:clear;
+// php artisan clear-compiled;
+// php artisan config:clear;
+// php artisan config:cache;
+// composer dump-autoload;

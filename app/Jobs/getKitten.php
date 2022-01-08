@@ -40,11 +40,7 @@ class getKitten implements ShouldQueue
             ->asJson()
             ->get();
             if($response){
-                $quote=Curl::to('https://api.quotable.io/random')
-            ->withHeader($API)
-            ->asJson()
-            ->get();
-              if($quote){
+
                 $kitty=kitten::create([
                     'kid'=>$response[0]->id,
                     'kurl'=>$response[0]->url,
@@ -55,8 +51,7 @@ class getKitten implements ShouldQueue
                     ->toMediaCollection('kittens');
                 
                 dispatch(new tweetKitten($kitty))->delay(now()->addSeconds(10));
-                //return $kitty;
-            }
+            
             };
         } catch (\Throwable $th) {
             throw $th;

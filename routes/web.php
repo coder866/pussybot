@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Intervention\Image\ImageManagerStatic as Image;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -40,11 +41,30 @@ Route::get('/getTrends', function()
 {
 	//return Twitter::forApiV1()->getTrendsClosest([1.2921,36.8219]);
 	//dd(Twitter::forApiV1()->getTrendsClosest(['lat'=>1.2921,'long'=>36.8219]));
-	//return Twitter::forApiV1()->getTrendsAvailable();
+	return Twitter::forApiV1()->getTrendsAvailable();
     //dd(collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>1528488]))[0]->trends)->sortByDesc('tweet_volume')->random(5)->implode('name', ', '));
-    return collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>1528488]))[0]->trends)->sortByDesc('tweet_volume')->random(5)->implode('name', ', ');
+    //return collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>1528488]))[0]->trends)->sortByDesc('tweet_volume')->random(5)->implode('name', ', ');
 
 	//return Twitter::forApiV1()->getTrendsPlace(['id'=>1528488]);
+});
+
+Route::get('/art',function(){
+    dd(Purr::getTrendLocations());
+});
+Route::get('/wt',function(){
+    dd(Purr::getWorldwideTrending());
+});
+Route::get('/woeidt',function(){
+    
+    dd(Purr::getTrendingByWoeid(1528488));
+});
+Route::get('/random',function(){
+    
+    return Purr::getTrendingRandom();
+});
+Route::get('/getText',function(){
+    
+    return Purr::getTweetText();
 });
 
 Route::get('/getImage',function(){
@@ -53,5 +73,6 @@ Route::get('/getImage',function(){
     $image->save(public_path('media/catx.png'));
     return 'saved';
 });
+
 
 Route::get('/getKitten', [\App\Http\Controllers\pussyController::class,'store']);

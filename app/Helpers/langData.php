@@ -5,6 +5,7 @@ use Illuminate\Support\Str;
 
 class langData
 {
+    /** Return country language code2 when given language  */
     public static function getLangCode($language){
     $langs=[
         "Afar"=>"aa", 

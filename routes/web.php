@@ -76,3 +76,8 @@ Route::get('/getImage',function(){
 
 
 Route::get('/getKitten', [\App\Http\Controllers\pussyController::class,'store']);
+
+
+// sudo supervisorctl reread
+// sudo supervisorctl update
+// sudo supervisorctl start pussybot-worker:*

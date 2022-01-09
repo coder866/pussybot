@@ -30,7 +30,7 @@ class customfunc
     }
     
     public static function getTrendingKe(){
-        $tweetText= SELF::getRandomQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#Caturday,#CatLove,#Purrrr";
+        $tweetText= SELF::getRandomQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#MotivationMonday,#MeowMonday,#CatLove,#MondayMadness,#Purrrr";
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,
@@ -55,7 +55,7 @@ class customfunc
             'tweet'=>$tweetText,
             'status'=>0
         ]);
-        return $tweetText.PHP_EOL.SELF::getTrendingByWoeid($loc->woeid).",#Caturday,#CatLove,#Purrrr";
+        return $tweetText.PHP_EOL.SELF::getTrendingByWoeid($loc->woeid).",#MotivationMonday,#MeowMonday,#CatLove,#MondayMadness,#Purrrr";
     }
 
     public static function getCountryLanguage($countrycode="KE"){
@@ -101,7 +101,7 @@ class customfunc
 
     public static function getWorldTweetText(){
 
-        $tweetText=SELF::getRandomQuote().PHP_EOL.SELF::getWorldwideTrending().",#Caturday,#CatLove,#Purrrr";
+        $tweetText=SELF::getRandomQuote().PHP_EOL.SELF::getWorldwideTrending().",#MotivationMonday,#MeowMonday,#CatLove,#MondayMadness,#Purrrr";
         woeid::create([
             'loc'=>'worldwide',
             'tweet'=>$tweetText,

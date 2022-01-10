@@ -26,11 +26,12 @@ class customfunc
     }
     public static function getTrendingByWoeid($woeid=1){
 
-        return collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>$woeid]))[0]->trends)->sort()->take(5)->implode('name', ', ');
+        //return collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>$woeid]))[0]->trends)->sort()->take(5)->implode('name', ', ');
+        return collect(collect(Twitter::forApiV1()->getTrendsPlace(['id'=>$woeid]))[0]->trends)->sort()->random(5)->implode('name', ', ');
     }
     
     public static function getTrendingKe(){
-        $tweetText= SELF::getRandomQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#MotivationMonday,#MeowMonday,#CatLove,#MondayMadness,#Purrrr";
+        $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,
@@ -77,6 +78,21 @@ class customfunc
         return $tweetText;
     }
 
+    public static function getRandomZenQuote(){
+        $keyword=SELF::getRandomKeyword();
+
+        $quote=Curl::to("https://zenquotes.io/api/random/{$keyword}")
+        ->asJson()
+        ->get();
+        $qresp=collect($quote)->first();
+
+         
+        $tweetText=$qresp->q.'~'.$qresp->a;
+
+        return $tweetText;
+    }
+
+
     public static function getTranslation($text,$tolanguage)
     {   $headers=array(
             'content-type:application/x-www-form-urlencoded',
@@ -86,7 +102,7 @@ class customfunc
     );
        $data=[
         'q'=>$text,
-        'target'=> $tolanguage,
+        'target'=> $tolanguage, 
         'source'=>'en'
        ];
         $response = Curl::to("https://google-translate1.p.rapidapi.com/language/translate/v2")
@@ -115,25 +131,61 @@ class customfunc
     }
 
     public static function getTweetText(){
-        $Tweets=woeid::all()->sortByDesc('created_at')->take(2);
+        // $Tweets=woeid::all()->sortByDesc('created_at')->take(2);
 
-        $lastTweet=$Tweets->last();
-        //dd($lastTweet);
-        if(!isset($Tweets)){return SELF::getWorldTweetText();}
+        // $lastTweet=$Tweets->last();
+        // //dd($lastTweet);
+        // if(!isset($Tweets)){return SELF::getWorldTweetText();}
         
-        $diff=Carbon::parse($lastTweet->created_at)->diffInHours(Carbon::now());
+        // $diff=Carbon::parse($lastTweet->created_at)->diffInHours(Carbon::now());
         
-        if($diff>=2){
-            return SELF::getWorldTweetText();
-        }else{
-            $hasKe=$Tweets->pluck('loc')->values()->contains('kenya');
-            if(!$hasKe){
-                return SELF::getTrendingKe();
-            }
-            return SELF::getCountryTweetText();
+        // if($diff>=2){
+        //     return SELF::getWorldTweetText();
+        // }else{
+        //     $hasKe=$Tweets->pluck('loc')->values()->contains('kenya');
+        //     if(!$hasKe){
+        //         return SELF::getTrendingKe();
+        //     }
+        //     return SELF::getCountryTweetText();
 
-        }
+        // }
+        return SELF::getTrendingKe();
 
     }
+
+    public static function getRandomKeyword()
+{
+    $keyword=collect(['Anxiety',
+                        'Change',
+                        'Choice',
+                        'Confidence',
+                        'Courage',
+                        'Death',
+                        'Dreams',
+                        'Excellence',
+                        'Failure',
+                        'Fairness',
+                        'Fear',
+                        'Forgiveness',
+                        'Freedom',
+                        'Future',
+                        'Happiness',
+                        'Inspiration',
+                        'Kindness',
+                        'Leadership',
+                        'Life',
+                        'Living',
+                        'Love',
+                        'Pain',
+                        'Past',
+                        'Success',
+                        'Time',
+                        'Today',
+                        'Truth',
+                        'Work'
+                        ]);
+    return $keyword->random(1)->first();
+}
+
 
 }

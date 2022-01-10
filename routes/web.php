@@ -63,10 +63,13 @@ Route::get('/random',function(){
     return Purr::getTrendingRandom();
 });
 Route::get('/getText',function(){
-    
+    //dd(Purr::getRandomZenQuote());
     return Purr::getTweetText();
 });
 
+Route::get('/getWord',function(){
+    dd(Botlang::getRandomKeyword());
+});
 Route::get('/getImage',function(){
     
     $image=Image::load('https://cdn2.thecatapi.com/images/8x4MlAzwH.png');
@@ -78,9 +81,7 @@ Route::get('/getImage',function(){
 Route::get('/getKitten', [\App\Http\Controllers\pussyController::class,'store']);
 
 
-// sudo supervisorctl reread
-// sudo supervisorctl update
-// sudo supervisorctl start pussybot-worker:*
+
 
 // php artisan cache:clear;
 // php artisan view:clear;
@@ -89,3 +90,7 @@ Route::get('/getKitten', [\App\Http\Controllers\pussyController::class,'store'])
 // php artisan config:clear;
 // php artisan config:cache;
 // composer dump-autoload;
+
+// sudo supervisorctl reread
+// sudo supervisorctl update
+// sudo supervisorctl start pussybot-worker:*

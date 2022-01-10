@@ -199,5 +199,38 @@ class langData
         return false !== stristr($key, $language);
     })->values()->first();
 }
+public static function getRandomKeyword()
+{
+    $keyword=collect(['Anxiety',
+                        'Change',
+                        'Choice',
+                        'Confidence',
+                        'Courage',
+                        'Death',
+                        'Dreams',
+                        'Excellence',
+                        'Failure',
+                        'Fairness',
+                        'Fear',
+                        'Forgiveness',
+                        'Freedom',
+                        'Future',
+                        'Happiness',
+                        'Inspiration',
+                        'Kindness',
+                        'Leadership',
+                        'Life',
+                        'Living',
+                        'Love',
+                        'Pain',
+                        'Past',
+                        'Success',
+                        'Time',
+                        'Today',
+                        'Truth',
+                        'Work'
+                        ]);
+    return $keyword->random(1);
+}
 
 }

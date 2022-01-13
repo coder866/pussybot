@@ -19,15 +19,17 @@ use Purr;
 class tweetKitten implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-    public $kitten;
+    public $kitten,$isGif,$filename;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(kitten $kitten)
+    public function __construct(kitten $kitten=null,$isGif=false,$filename='')
     {
         $this->kitten=$kitten;
+        $this->isGif=$isGif;
+        $this->filename=$filename;
     }
 
     /**
@@ -45,8 +47,9 @@ class tweetKitten implements ShouldQueue
         //$tweetText=$quote->content.' ~'.$quote->author.PHP_EOL.$topics;
 
         $tweetText=Purr::getTweetText();
-             
-        $uploaded_media = Twitter::forApiV1()->uploadMedia(['media' => File::get($this->kitten->getFirstMediaPath('kittens','kitten'))]);
+        $image2upload=$this->isGif?File::get($this->filename):
+            File::get($this->kitten->getFirstMediaPath('kittens','kitten'));
+        $uploaded_media = Twitter::forApiV1()->uploadMedia(['media' =>$image2upload ]);
         Twitter::forApiV1()->postTweet(['status' => $tweetText, 'media_ids' => $uploaded_media->media_id_string]);
        
     }

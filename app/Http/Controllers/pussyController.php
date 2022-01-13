@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\getKitten;
+use App\Jobs\getKittenGif;
 use App\Jobs\tweetKitten;
 use App\Models\kitten;
+use Atymic\Twitter\Twitter;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 use NotificationChannels\Twitter\TwitterStatusUpdate;
@@ -41,7 +43,8 @@ class pussyController extends Controller
     {
         
         try {
-            dispatch(new getKitten())->delay(now()->addSeconds(10));
+           // dispatch(new getKitten())->delay(now()->addSeconds(10));
+            dispatch(new getKittenGif())->delay(now()->addSeconds(10));
             dd("Wait for it-".now());
             // $API="x-api-key:".env('KITTEN_API');
             // $response = Curl::to('https://api.thecatapi.com/v1/images/search?breed=Aegean&mime_types=png')
@@ -112,4 +115,6 @@ class pussyController extends Controller
     {
         //
     }
+
+
 }

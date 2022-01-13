@@ -1,5 +1,6 @@
 <?php
 
+use App\Jobs\SearchLikeRtJob;
 use App\Models\kitten;
 use Atymic\Twitter\Facade\Twitter;
 use Illuminate\Support\Facades\File;
@@ -34,7 +35,9 @@ Route::get('/tweetMedia', function()
 
 Route::get('/tweet', function()
 {
-	return Twitter::forApiV1()->postTweet(['status' => 'Happy New Year,Pussy Lovers #PussyBot,#KittenLove, #HappyNewYear', 'response_format' => 'json']);
+	//return Twitter::forApiV1()->postTweet(['status' => 'Happy New Year,Pussy Lovers #PussyBot,#KittenLove, #HappyNewYear', 'response_format' => 'json']);
+    //Purr::tweetSearch();
+    dispatch(new SearchLikeRtJob());
 });
 
 Route::get('/getTrends', function()
@@ -79,6 +82,7 @@ Route::get('/getImage',function(){
 
 
 Route::get('/getKitten', [\App\Http\Controllers\pussyController::class,'store']);
+
 
 
 

@@ -5,6 +5,8 @@ namespace App\Console;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Jobs\getKitten;
+use App\Jobs\getKittenGif;
+use App\Jobs\SearchLikeRtJob;
 
 class Kernel extends ConsoleKernel
 {
@@ -19,8 +21,14 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')->hourly();
 
         $schedule->call(function () {
-            dispatch(new getKitten())->delay(now()->addSeconds(10));
+            //dispatch(new getKitten())->delay(now()->addSeconds(10));
+            dispatch(new getKittenGif())->delay(now()->addSeconds(10));
         })->hourly();
+        
+        $schedule->call(function () {
+            //dispatch(new getKitten())->delay(now()->addSeconds(10));
+            dispatch(new SearchLikeRtJob())->delay(now()->addSeconds(10));
+        })->everyThreeHours();
     }
 
     /**

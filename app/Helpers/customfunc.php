@@ -154,38 +154,62 @@ class customfunc
     }
 
     public static function getRandomKeyword()
-{
-    $keyword=collect(['Anxiety',
-                        'Change',
-                        'Choice',
-                        'Confidence',
-                        'Courage',
-                        'Death',
-                        'Dreams',
-                        'Excellence',
-                        'Failure',
-                        'Fairness',
-                        'Fear',
-                        'Forgiveness',
-                        'Freedom',
-                        'Future',
-                        'Happiness',
-                        'Inspiration',
-                        'Kindness',
-                        'Leadership',
-                        'Life',
-                        'Living',
-                        'Love',
-                        'Pain',
-                        'Past',
-                        'Success',
-                        'Time',
-                        'Today',
-                        'Truth',
-                        'Work'
-                        ]);
-    return $keyword->random(1)->first();
-}
+    {
+        $keyword=collect(['Anxiety',
+                            'Change',
+                            'Choice',
+                            'Confidence',
+                            'Courage',
+                            'Death',
+                            'Dreams',
+                            'Excellence',
+                            'Failure',
+                            'Fairness',
+                            'Fear',
+                            'Forgiveness',
+                            'Freedom',
+                            'Future',
+                            'Happiness',
+                            'Inspiration',
+                            'Kindness',
+                            'Leadership',
+                            'Life',
+                            'Living',
+                            'Love',
+                            'Pain',
+                            'Past',
+                            'Success',
+                            'Time',
+                            'Today',
+                            'Truth',
+                            'Work'
+                            ]);
+        return $keyword->random(1)->first();
+    }
+
+    public static function seachTweet()
+    {
+        //https://api.twitter.com/2/tweets/search/recent
+
+        $response = Curl::to("https://api.twitter.com/2/tweets/search/recent")
+                    ->withBearer(env('TWITTER_BEARER_TOKEN'))
+                    ->get(); 
+                    
+        dd($response);
+                    
+    }
+
+    public static function tweetSearch(){
+        
+        $results=Twitter::forApiV1()->getSearch(["q"=>"cats,(cat OR happiness OR grateful OR thankful OR gratitude)-has:media,lang:en"]);
+        $twts=collect($results->statuses)->random(5);
+        
+        // $Rtresp=Twitter::forApiV1()->postRt($twt->id);
+        // $FVresp=Twitter::forApiV1()->postFavorite(['id'=>$twt->id]);
+
+         //dd($twts);
+        return $twts;
+    }
 
 
 }

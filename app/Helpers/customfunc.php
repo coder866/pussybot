@@ -31,7 +31,8 @@ class customfunc
     }
     
     public static function getTrendingKe(){
-        $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
+       // $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
+       $tweetText= SELF::getRandomZenQuote().PHP_EOL."#MasculinitySaturday,#Purpose,#Goals,#Catarday,#Leadership";
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,
@@ -155,6 +156,23 @@ class customfunc
 
     public static function getRandomKeyword()
     {
+        $keywordSato=collect(
+        [
+        'Confidence',
+        'Courage',
+        'Dreams',
+        'Excellence',
+        'Failure',
+        'Future',
+        'Leadership',
+        'Pain',
+        'Success',
+        'Time',
+        'Today',
+        'Truth',
+        'Work'
+        ]
+        );
         $keyword=collect(['Anxiety',
                             'Change',
                             'Choice',
@@ -184,7 +202,7 @@ class customfunc
                             'Truth',
                             'Work'
                             ]);
-        return $keyword->random(1)->first();
+        return $keywordSato->random(1)->first();
     }
 
     public static function seachTweet()
@@ -201,8 +219,10 @@ class customfunc
 
     public static function tweetSearch(){
         
-        $results=Twitter::forApiV1()->getSearch(["q"=>"cats,(cat OR happiness OR grateful OR thankful OR gratitude)-has:media,lang:en"]);
-        $twts=collect($results->statuses)->random(5);
+        $results=Twitter::forApiV1()->getSearch(["q"=>"#MasculinitySaturday OR #Purpose OR #Goals OR #Efficiency OR
+        #Leadership
+        -has:media,lang:en"]);
+        $twts=collect($results->statuses)->unique('id')->random(5);
         
         // $Rtresp=Twitter::forApiV1()->postRt($twt->id);
         // $FVresp=Twitter::forApiV1()->postFavorite(['id'=>$twt->id]);

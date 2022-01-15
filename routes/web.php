@@ -36,8 +36,9 @@ Route::get('/tweetMedia', function()
 Route::get('/tweet', function()
 {
 	//return Twitter::forApiV1()->postTweet(['status' => 'Happy New Year,Pussy Lovers #PussyBot,#KittenLove, #HappyNewYear', 'response_format' => 'json']);
-    //Purr::tweetSearch();
-    dispatch(new SearchLikeRtJob());
+    //dd(Purr::tweetSearch());
+    dd(Purr::getTweetText());
+    // dispatch(new SearchLikeRtJob());
 });
 
 Route::get('/getTrends', function()
@@ -67,7 +68,7 @@ Route::get('/random',function(){
 });
 Route::get('/getText',function(){
     //dd(Purr::getRandomZenQuote());
-    return Purr::getTweetText();
+    return Purr::getRandomZenQuote();
 });
 
 Route::get('/getWord',function(){

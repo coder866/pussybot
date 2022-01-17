@@ -32,7 +32,7 @@ class customfunc
     
     public static function getTrendingKe(){
        // $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
-       $tweetText= SELF::getRandomZenQuote().PHP_EOL."#MasculinitySaturday,#Purpose,#Goals,#Catarday,#Leadership";
+       $tweetText= SELF::getRandomZenQuote().PHP_EOL."#MotivationMonday,#MeowMonday,#CatLove,#Inspiration";
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,
@@ -161,12 +161,12 @@ class customfunc
         'Confidence',
         'Courage',
         'Dreams',
-        'Excellence',
+        'Inspiration',
         'Failure',
         'Future',
         'Leadership',
         'Pain',
-        'Success',
+        'Anxiety',
         'Time',
         'Today',
         'Truth',
@@ -219,8 +219,8 @@ class customfunc
 
     public static function tweetSearch(){
         
-        $results=Twitter::forApiV1()->getSearch(["q"=>"#MasculinitySaturday OR #Purpose OR #Goals OR #Efficiency OR
-        #Leadership
+        $results=Twitter::forApiV1()->getSearch(["q"=>"#MondayMotivation OR #MotivationMonday OR #Purpose OR #Efficiency OR
+        #Leadership OR #Inspiration
         -has:media,lang:en"]);
         $twts=collect($results->statuses)->unique('id')->random(5);
         

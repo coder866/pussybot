@@ -50,7 +50,8 @@ class tweetKitten implements ShouldQueue
         $image2upload=$this->isGif?File::get($this->filename):
             File::get($this->kitten->getFirstMediaPath('kittens','kitten'));
         $uploaded_media = Twitter::forApiV1()->uploadMedia(['media' =>$image2upload ]);
-        Twitter::forApiV1()->postTweet(['status' => $tweetText, 'media_ids' => $uploaded_media->media_id_string]);
+       // Twitter::forApiV1()->postTweet(['status' => $tweetText, 'media_ids' => $uploaded_media->media_id_string]);
+        Twitter::forApiV1()->postTweet(['status' => $tweetText]);
        
     }
 }

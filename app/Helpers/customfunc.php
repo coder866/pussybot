@@ -32,7 +32,7 @@ class customfunc
     
     public static function getTrendingKe(){
        // $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
-       $tweetText= SELF::getRandomZenQuote().PHP_EOL."#MotivationMonday,#BlackBoxThinking,#CatLove,#Inspiration";
+       $tweetText= SELF::getRandomZenQuote().PHP_EOL."#transformationtuesday,#TuesdayMotivation,#BlackBoxThinking,#CatLove,#LearningFromFailuire,#tuesdayvibes";
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,

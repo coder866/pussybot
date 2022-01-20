@@ -33,12 +33,14 @@ class customfunc
     public static function getTrendingKe(){
        // $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
        $tweetText=
-       SELF::getRandomZenQuote().PHP_EOL."#wednesdaywisdom,#Wednesday,#BlackBoxThinking,#Kitty,#Learn,#CatsOfTwitter";
+       SELF::getRandomZenQuote().PHP_EOL."#ArtThursday,#ThankfulThursday,#ConnectThursday,#HistoryThursday,#BlackBoxThinking,#Kitty,#Learn,#CatsOfTwitter";
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,
             'status'=>0
         ]);
+
+
 
         return $tweetText;
     }
@@ -160,19 +162,19 @@ class customfunc
     {
         $keywordSato=collect(
         [
-        'Confidence',
-        'Courage',
-        'Dreams',
-        'Inspiration',
-        'Failure',
-        'Future',
-        'Leadership',
-        'Pain',
-        'Anxiety',
-        'Time',
-        'Today',
-        'Truth',
-        'Work'
+            'Life',
+            'Living',
+            'Love',
+            'Pain',
+            'Past',
+            'Time',
+            'Today',
+            'Truth',
+            'Death',
+            'Dreams',
+            'Fear',
+            'Future',
+
         ]
         );
         $keyword=collect(['Anxiety',

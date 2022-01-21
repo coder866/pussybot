@@ -6,6 +6,7 @@ use Atymic\Twitter\Facade\Twitter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\ImageManagerStatic as Image;
+use App\Http\Controllers;
 
 
 
@@ -19,6 +20,8 @@ use Intervention\Image\ImageManagerStatic as Image;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/{any}', [ApplicationController::class])->where('any', '.*');
 
 Route::get('/', function () {
     

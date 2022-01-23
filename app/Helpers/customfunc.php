@@ -33,7 +33,11 @@ class customfunc
     public static function getTrendingKe(){
        // $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
        $tweetText=
+<<<<<<< HEAD
        SELF::getRandomZenQuote().PHP_EOL."#CatSunday,#SundayFortunes,#Goodvibes,#KittenLove,#BlackBoxThinking,#Kitty,#CatsOfTwitter";
+=======
+       SELF::getRandomZenQuote().PHP_EOL."#MasculinitySaturday,#Catarday,#Motivation,#Goals,#Purpose,#BlackBoxThinking,#Kitty,#CatsOfTwitter";
+>>>>>>> 57c90478a00a28c0240f627c24744746fd349f73
         woeid::create([
             'loc'=>'kenya',
             'tweet'=>$tweetText,
@@ -168,7 +172,19 @@ class customfunc
             'Happiness',
             'Inspiration',
             'Kindness',
-            'Leadership'
+            'Leadership',
+            'Anxiety',
+                            'Change',
+                            'Choice',
+                            'Confidence',
+                            'Courage',
+                            'Death',
+                            'Dreams',
+                            'Excellence',
+                            'Pain',
+                            'Past',
+                            'Time',
+                            'Today',
 
         ]
         );
@@ -195,9 +211,9 @@ class customfunc
                             'Love',
                             'Pain',
                             'Past',
-                            'Success',
                             'Time',
                             'Today',
+                            'Success',
                             'Truth',
                             'Work'
                             ]);
@@ -218,11 +234,17 @@ class customfunc
 
     public static function tweetSearch(){
         #wednesdaywisdom
+<<<<<<< HEAD
         $results=Twitter::forApiV1()->getSearch(["q"=>"#Sunday OR #Happiness OR #Purpose OR
         #Kitty OR #MindValley OR #CatsofTwitter OR #CatLove OR #Love OR #PositiveVibes OR #Truthful OR #Peace OR
         #Peaceful
         #Leadership OR #Wisdom OR #BlackBoxThinking OR Cats OR #Strength OR #Future OR #Thankfulness OR #Hope OR #
         Hopefull
+=======
+        $results=Twitter::forApiV1()->getSearch(["q"=>"#Catarday OR #Masculinitysaturday OR #Purpose OR
+        #Kitty OR #MindValley OR #CatsofTwitter OR #CatLove OR
+        #Leadership OR #Wisdom OR #BlackBoxThinking OR Cats OR #Goals OR #Motivation
+>>>>>>> 57c90478a00a28c0240f627c24744746fd349f73
         -has:media,lang:en"]);
         $twts=collect($results->statuses)->unique('id')->random(5);
         

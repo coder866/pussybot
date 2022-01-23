@@ -232,7 +232,7 @@ class customfunc
         #wednesdaywisdom
         $results=Twitter::forApiV1()->getSearch(["q"=>"#Sunday OR #Happiness OR #Purpose OR
         #Kitty OR #MindValley OR #CatsofTwitter OR #CatLove OR #Love OR #PositiveVibes OR #Truthful OR #Peace OR
-        #Peaceful
+        #Peaceful OR #Blessings
         #Leadership OR #Wisdom OR #BlackBoxThinking OR Cats OR #Strength OR #Future OR #Thankfulness OR #Hope OR #
         Hopefull
         -has:media,lang:en"]);

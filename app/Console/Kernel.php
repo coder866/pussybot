@@ -28,7 +28,7 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             //dispatch(new getKitten())->delay(now()->addSeconds(10));
             dispatch(new SearchLikeRtJob())->delay(now()->addSeconds(10));
-        })->everyThreeHours();
+        })->everyTenMinutes();
     }
 
     /**

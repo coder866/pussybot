@@ -12,21 +12,32 @@
                 <div class="grid overflow-hidden bg-white h-auto w-full p-3">
                     <div class="ui-form p-10">
                         <span class="text-blue-400 text-2xl"
-                            >Welcome Back,</span
+                            >Create Account,</span
                         >
                         <p class="text-primary m-2">
-                            Please LogIn to explore..
+                            Fill in your Sweet as requested...
                         </p>
                         <form>
                             <div class="form-control">
                                 <label class="label">
-                                    <span class="label-text">Username</span>
+                                    <span class="label-text">Name</span>
                                 </label>
                                 <input
                                     type="text"
-                                    placeholder="username"
+                                    placeholder="Full Names"
                                     class="input input-primary input-bordered"
-                                    v-model="user.username"
+                                    v-model="user.name"
+                                />
+                            </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text">Email</span>
+                                </label>
+                                <input
+                                    type="text"
+                                    placeholder="email"
+                                    class="input input-primary input-bordered"
+                                    v-model="user.email"
                                 />
                             </div>
                             <div class="form-control">
@@ -40,9 +51,22 @@
                                     v-model="user.password"
                                 />
                             </div>
+                            <div class="form-control">
+                                <label class="label">
+                                    <span class="label-text"
+                                        >Confirm Password</span
+                                    >
+                                </label>
+                                <input
+                                    type="password"
+                                    placeholder="Password Confirmation"
+                                    class="input input-primary input-bordered"
+                                    v-model="user.password"
+                                />
+                            </div>
                             <br />
                             <button class="btn btn-primary btn-wide">
-                                Login
+                                Submit Details
                             </button>
                         </form>
                     </div>

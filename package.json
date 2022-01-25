@@ -22,6 +22,7 @@
         "@popperjs/core": "2.9.1",
         "chart.js": "2.9.4",
         "core-js": "3.9.1",
+        "daisyui": "^1.25.4",
         "file-loader": "^6.2.0",
         "vue": "^2.6.14",
         "vue-loader": "^15.9.5",

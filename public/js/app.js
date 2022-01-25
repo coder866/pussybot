@@ -2176,19 +2176,40 @@ var routes = [{
   name: "dashboard",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_Dashboard_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/Dashboard.vue */ "./resources/js/views/Dashboard.vue"));
-  }
+  },
+  meta: {
+    requiresAuth: true
+  } //beforeEnter: routeGuard,
+
 }, {
   path: "/login",
   name: "login",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/Login.vue */ "./resources/js/views/Login.vue"));
+  },
+  meta: {
+    redirectAfterAuth: true,
+    "public": true
   }
 }, {
-  path: "/:pathMatch(.*)*",
-  name: "notfound",
+  path: "/register",
+  name: "register",
+  component: function component() {
+    return __webpack_require__.e(/*! import() */ "resources_js_views_Register_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/Register.vue */ "./resources/js/views/Register.vue"));
+  },
+  meta: {
+    redirectAfterAuth: true,
+    "public": true
+  }
+}, {
+  path: "/not-found",
+  name: "error-404",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_NotFound_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/NotFound.vue */ "./resources/js/views/NotFound.vue"));
   }
+}, {
+  path: "*",
+  redirect: "/not-found"
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
@@ -2196,9 +2217,26 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes
 });
 router.beforeEach(function (to, from, next) {
-  console.log(to);
-  next();
-});
+  var isAuthenticated = false;
+
+  if (!isAuthenticated && !to.meta["public"]) {
+    next("/login");
+  } else {
+    next();
+  }
+}); // function routeGuard(to, from, next) {
+//     var isAuthenticated = false;
+//     //this is just an example. You will have to find a better or
+//     // centralised way to handle you localstorage data handling
+//     // if (localStorage.getItem("LoggedUser")) isAuthenticated = true;
+//     // else isAuthenticated = false;
+//     if (isAuthenticated) {
+//         next(); // allow to enter route
+//     } else {
+//         next("/login"); // go to '/login';
+//     }
+// }
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 
 /***/ }),
@@ -20464,7 +20502,7 @@ var render = function () {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_c("router-view")], 1)
+  return _c("div", { staticClass: "bg-blue-50" }, [_c("router-view")], 1)
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -37181,7 +37219,7 @@ module.exports = JSON.parse('{"name":"axios","version":"0.21.4","description":"P
 /******/ 		// This function allow to reference async chunks
 /******/ 		__webpack_require__.u = (chunkId) => {
 /******/ 			// return url for filenames not based on template
-/******/ 			if ({"resources_js_views_Dashboard_vue":1,"resources_js_views_Login_vue":1,"resources_js_views_NotFound_vue":1}[chunkId]) return "js/" + chunkId + ".js";
+/******/ 			if ({"resources_js_views_Dashboard_vue":1,"resources_js_views_Login_vue":1,"resources_js_views_Register_vue":1,"resources_js_views_NotFound_vue":1}[chunkId]) return "js/" + chunkId + ".js";
 /******/ 			// return url for filenames based on template
 /******/ 			return undefined;
 /******/ 		};

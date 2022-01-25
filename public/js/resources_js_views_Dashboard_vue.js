@@ -3637,6 +3637,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -42807,7 +42825,7 @@ var render = function () {
                 "md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0",
               attrs: { href: "javascript:void(0)" },
             },
-            [_vm._v("\n      Tailwind Starter Kit\n    ")]
+            [_vm._v("\n            Pussy Bot\n        ")]
           ),
           _vm._v(" "),
           _c(
@@ -42880,7 +42898,7 @@ var render = function () {
                   staticClass:
                     "md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline",
                 },
-                [_vm._v("\n        Documentation\n      ")]
+                [_vm._v("\n                Documentation\n            ")]
               ),
               _vm._v(" "),
               _vm._m(3),
@@ -42904,7 +42922,11 @@ var staticRenderFns = [
             "md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-4 px-0",
           attrs: { href: "javascript:void(0)" },
         },
-        [_vm._v("\n              Tailwind Starter Kit\n            ")]
+        [
+          _vm._v(
+            "\n                            Tailwind Starter Kit\n                        "
+          ),
+        ]
       ),
     ])
   },
@@ -42916,7 +42938,7 @@ var staticRenderFns = [
       _c("div", { staticClass: "mb-3 pt-0" }, [
         _c("input", {
           staticClass:
-            "border-0 px-3 py-2 h-12 border border-solid  border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal",
+            "border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal",
           attrs: { type: "text", placeholder: "Search" },
         }),
       ]),
@@ -42940,7 +42962,7 @@ var staticRenderFns = [
             },
             [
               _c("i", { staticClass: "fas fa-tv opacity-75 mr-2 text-sm" }),
-              _vm._v("\n            Dashboard"),
+              _vm._v("\n                        Dashboard"),
             ]
           ),
         ]),
@@ -42957,7 +42979,7 @@ var staticRenderFns = [
               _c("i", {
                 staticClass: "fas fa-newspaper text-blueGray-400 mr-2 text-sm",
               }),
-              _vm._v("\n            Landing Page"),
+              _vm._v("\n                        Landing Page"),
             ]
           ),
         ]),
@@ -42975,7 +42997,7 @@ var staticRenderFns = [
                 staticClass:
                   "fas fa-user-circle text-blueGray-400 mr-2 text-sm",
               }),
-              _vm._v("\n            Profile Page"),
+              _vm._v("\n                        Profile Page"),
             ]
           ),
         ]),
@@ -42993,7 +43015,7 @@ var staticRenderFns = [
                 staticClass:
                   "fas fa-fingerprint text-blueGray-400 mr-2 text-sm",
               }),
-              _vm._v("\n            Login"),
+              _vm._v("\n                        Login"),
             ]
           ),
         ]),
@@ -43011,7 +43033,7 @@ var staticRenderFns = [
                 staticClass:
                   "fas fa-clipboard-list text-blueGray-300 mr-2 text-sm",
               }),
-              _vm._v("\n            Register (soon)"),
+              _vm._v("\n                        Register (soon)"),
             ]
           ),
         ]),
@@ -43028,7 +43050,7 @@ var staticRenderFns = [
               _c("i", {
                 staticClass: "fas fa-tools text-blueGray-300 mr-2 text-sm",
               }),
-              _vm._v("\n            Settings (soon)"),
+              _vm._v("\n                        Settings (soon)"),
             ]
           ),
         ]),
@@ -43059,7 +43081,7 @@ var staticRenderFns = [
                 staticClass:
                   "fas fa-paint-brush mr-2 text-blueGray-400 text-base",
               }),
-              _vm._v("\n            Styles"),
+              _vm._v("\n                        Styles"),
             ]
           ),
         ]),
@@ -43076,7 +43098,7 @@ var staticRenderFns = [
               _c("i", {
                 staticClass: "fab fa-css3-alt mr-2 text-blueGray-400 text-base",
               }),
-              _vm._v("\n            CSS Components"),
+              _vm._v("\n                        CSS Components"),
             ]
           ),
         ]),
@@ -43093,7 +43115,7 @@ var staticRenderFns = [
               _c("i", {
                 staticClass: "fab fa-vuejs mr-2 text-blueGray-400 text-base",
               }),
-              _vm._v("\n            VueJS"),
+              _vm._v("\n                        VueJS"),
             ]
           ),
         ]),
@@ -43103,14 +43125,14 @@ var staticRenderFns = [
             "a",
             {
               staticClass:
-                "text-blueGray-700 hover:text-blueGray-500  text-sm block mb-4 no-underline font-semibold",
+                "text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold",
               attrs: { href: "#/documentation/react/alerts" },
             },
             [
               _c("i", {
                 staticClass: "fab fa-react mr-2 text-blueGray-400 text-base",
               }),
-              _vm._v("\n            React"),
+              _vm._v("\n                        React"),
             ]
           ),
         ]),
@@ -43120,14 +43142,14 @@ var staticRenderFns = [
             "a",
             {
               staticClass:
-                "text-blueGray-700 hover:text-blueGray-500  text-sm block mb-4 no-underline font-semibold",
+                "text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold",
               attrs: { href: "#/documentation/angular/alerts" },
             },
             [
               _c("i", {
                 staticClass: "fab fa-angular mr-2 text-blueGray-400 text-base",
               }),
-              _vm._v("\n            Angular"),
+              _vm._v("\n                        Angular"),
             ]
           ),
         ]),
@@ -43137,7 +43159,7 @@ var staticRenderFns = [
             "a",
             {
               staticClass:
-                "text-blueGray-700 hover:text-blueGray-500  text-sm block mb-4 no-underline font-semibold",
+                "text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold",
               attrs: { href: "#/documentation/javascript/alerts" },
             },
             [
@@ -43145,7 +43167,7 @@ var staticRenderFns = [
                 staticClass:
                   "fab fa-js-square mr-2 text-blueGray-400 text-base",
               }),
-              _vm._v("\n            Javascript"),
+              _vm._v("\n                        Javascript"),
             ]
           ),
         ]),

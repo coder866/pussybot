@@ -18,6 +18,9 @@ const routes = [
         path: "*",
         name: "notfound",
         component: () => import("../views/NotFound.vue"),
+        beforeEnter: (to, from, next) => {
+            console.log(from);
+        },
     },
 ];
 
@@ -25,6 +28,11 @@ const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
     routes,
+});
+
+router.beforeEach((to, from, next) => {
+    console.log(to);
+    next();
 });
 
 export default router;

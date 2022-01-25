@@ -2188,12 +2188,19 @@ var routes = [{
   name: "notfound",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_NotFound_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/NotFound.vue */ "./resources/js/views/NotFound.vue"));
+  },
+  beforeEnter: function beforeEnter(to, from, next) {
+    console.log(from);
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   mode: "history",
   base: process.env.BASE_URL,
   routes: routes
+});
+router.beforeEach(function (to, from, next) {
+  console.log(to);
+  next();
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (router);
 

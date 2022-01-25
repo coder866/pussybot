@@ -17,10 +17,7 @@ const routes = [
     {
         path: "*",
         name: "notfound",
-        component: () => import("../views/NotFound.vue"),
-        beforeEnter: (to, from, next) => {
-            console.log(from);
-        },
+        component: () => import("../views/Login.vue"),
     },
 ];
 

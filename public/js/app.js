@@ -2184,13 +2184,10 @@ var routes = [{
     return __webpack_require__.e(/*! import() */ "resources_js_views_Login_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/Login.vue */ "./resources/js/views/Login.vue"));
   }
 }, {
-  path: "*",
+  path: "/:pathMatch(.*)*",
   name: "notfound",
   component: function component() {
     return __webpack_require__.e(/*! import() */ "resources_js_views_NotFound_vue").then(__webpack_require__.bind(__webpack_require__, /*! ../views/NotFound.vue */ "./resources/js/views/NotFound.vue"));
-  },
-  beforeEnter: function beforeEnter(to, from, next) {
-    console.log(from);
   }
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({

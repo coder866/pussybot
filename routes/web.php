@@ -6,7 +6,7 @@ use Atymic\Twitter\Facade\Twitter;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
 use Intervention\Image\ImageManagerStatic as Image;
-use App\Http\Controllers;
+use App\Http\Controllers\ApplicationController;
 
 
 
@@ -21,7 +21,7 @@ use App\Http\Controllers;
 |
 */
 
-Route::get('/{any}', [ApplicationController::class])->where('any', '.*');
+Route::get('/{any}', [ApplicationController::class,'__invoke'])->where('any', '.*');
 
 // Route::get('/', function () {
     

@@ -11,7 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _assets_img_logincat_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/logincat.jpg */ "./resources/js/assets/img/logincat.jpg");
+/* harmony import */ var _assets_img_registercat_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/registercat.jpg */ "./resources/js/assets/img/registercat.jpg");
 //
 //
 //
@@ -100,10 +100,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      bgImg: _assets_img_logincat_jpg__WEBPACK_IMPORTED_MODULE_0__["default"],
+      bgImg: _assets_img_registercat_jpg__WEBPACK_IMPORTED_MODULE_0__["default"],
       user: {
-        username: "",
-        password: ""
+        name: "",
+        email: "",
+        password: "",
+        confirmpassword: ""
       }
     };
   }
@@ -111,17 +113,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/assets/img/logincat.jpg":
-/*!**********************************************!*\
-  !*** ./resources/js/assets/img/logincat.jpg ***!
-  \**********************************************/
+/***/ "./resources/js/assets/img/registercat.jpg":
+/*!*************************************************!*\
+  !*** ./resources/js/assets/img/registercat.jpg ***!
+  \*************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logincat.jpg?991de89da2d9e36d968e4c13b2abcfbd");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/registercat.jpg?991de89da2d9e36d968e4c13b2abcfbd");
 
 /***/ }),
 
@@ -337,8 +339,8 @@ var render = function () {
                           {
                             name: "model",
                             rawName: "v-model",
-                            value: _vm.user.password,
-                            expression: "user.password",
+                            value: _vm.user.confirmpassword,
+                            expression: "user.confirmpassword",
                           },
                         ],
                         staticClass: "input input-primary input-bordered",
@@ -346,13 +348,17 @@ var render = function () {
                           type: "password",
                           placeholder: "Password Confirmation",
                         },
-                        domProps: { value: _vm.user.password },
+                        domProps: { value: _vm.user.confirmpassword },
                         on: {
                           input: function ($event) {
                             if ($event.target.composing) {
                               return
                             }
-                            _vm.$set(_vm.user, "password", $event.target.value)
+                            _vm.$set(
+                              _vm.user,
+                              "confirmpassword",
+                              $event.target.value
+                            )
                           },
                         },
                       }),

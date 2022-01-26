@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import logincat from "../assets/img/logincat.jpg";
+import logincat from "../assets/img/logincat.jpeg";
 export default {
     data() {
         return {

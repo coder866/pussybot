@@ -11,7 +11,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _assets_img_logincat_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/logincat.jpg */ "./resources/js/assets/img/logincat.jpg");
+/* harmony import */ var _assets_img_logincat_jpeg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/logincat.jpeg */ "./resources/js/assets/img/logincat.jpeg");
 //
 //
 //
@@ -76,7 +76,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      bgImg: _assets_img_logincat_jpg__WEBPACK_IMPORTED_MODULE_0__["default"],
+      bgImg: _assets_img_logincat_jpeg__WEBPACK_IMPORTED_MODULE_0__["default"],
       user: {
         username: "",
         password: ""
@@ -87,17 +87,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/assets/img/logincat.jpg":
-/*!**********************************************!*\
-  !*** ./resources/js/assets/img/logincat.jpg ***!
-  \**********************************************/
+/***/ "./resources/js/assets/img/logincat.jpeg":
+/*!***********************************************!*\
+  !*** ./resources/js/assets/img/logincat.jpeg ***!
+  \***********************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logincat.jpg?991de89da2d9e36d968e4c13b2abcfbd");
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ("/images/logincat.jpeg?a1ca6db6e90a978d838054981c8de34a");
 
 /***/ }),
 

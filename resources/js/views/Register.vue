@@ -61,7 +61,7 @@
                                     type="password"
                                     placeholder="Password Confirmation"
                                     class="input input-primary input-bordered"
-                                    v-model="user.password"
+                                    v-model="user.confirmpassword"
                                 />
                             </div>
                             <br />
@@ -83,14 +83,16 @@
 </template>
 
 <script>
-import logincat from "../assets/img/logincat.jpg";
+import registercat from "../assets/img/registercat.jpg";
 export default {
     data() {
         return {
-            bgImg: logincat,
+            bgImg: registercat,
             user: {
-                username: "",
+                name: "",
+                email: "",
                 password: "",
+                confirmpassword: "",
             },
         };
     },

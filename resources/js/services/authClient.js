@@ -2,7 +2,7 @@ import axios from "axios";
 import store from "@/store";
 
 export const authClient = axios.create({
-    baseURL: "http://pussyapi.test",
+    baseURL: "http://pussybot.test",
     withCredentials: true, // required to handle the CSRF token
 });
 

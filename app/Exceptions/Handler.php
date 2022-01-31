@@ -2,7 +2,10 @@
 
 namespace App\Exceptions;
 
+use DI\NotFoundException;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Nette\Schema\ValidationException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -37,5 +40,40 @@ class Handler extends ExceptionHandler
         $this->reportable(function (Throwable $e) {
             //
         });
+
+        //handle Validation Exception
+//        $this->renderable(function(ValidationException $e,$request){
+//            if($request->expectsJson()){
+//                return response()->json([
+//                    'status'=>false,
+//                    'message'=>'validation failed',
+//                    'data'=>null,
+//                    'error'=>$e->getMessageObjects()
+//                ],422);
+//            }
+//        });
+        //handle all AuthorizationException
+//        $this->renderable(function(AuthorizationException $e,$request){
+//            if($request->expectsJson()){
+//                return response()->json([
+//                    'status'=>false,
+//                    'message'=>'Valid auth Credentials Required',
+//                    'data'=>null,
+//                    'error'=>null,
+//                ],401);
+//            }
+//            return redirect()->guest('login');
+//        });
+//        //handle all NotFoundException
+//        $this->renderable(function(NotFoundException $e,$request){
+//            if($request->expectsJson()){
+//                return response()->json([
+//                    'status'=>false,
+//                    'message'=>'Not Found',
+//                    'data'=>null,
+//                    'error'=>null,
+//                ],404);
+//            }
+//        });
     }
 }

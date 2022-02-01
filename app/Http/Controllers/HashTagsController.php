@@ -31,7 +31,7 @@ class HashTagsController extends Controller
 //            ]);
 
             $hashtag=Hashtag::create($request->all());
-            return response()->json($hashtag,201);
+            return response()->json(['tag'=>$hashtag],201);
 
         }catch (Throwable $th){
             return response([$th->getMessage()]);

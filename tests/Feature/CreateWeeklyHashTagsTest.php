@@ -39,9 +39,18 @@ class CreateWeeklyHashTagsTest extends TestCase
             'user_id'=>$userid
         ];
         $response=$this->postJson('/api/create-hashtag',$data);
-        dd($response->getContent());
-//                $response->assertOk();
-//            $response->assertStatus(201);
-//            $response->assertJsonCount(1);
+        $response->assertJsonStructure(['tag'=>['weekday']]);
+        $response->assertStatus(201);
+        $response->assertJsonCount(1);
+    }
+    public function test_Can_Update_Hash_tag(){
+        $hashTag=Hashtag::factory(1)->create();
+        $data=[
+            $hashTag->weekday,
+        ];
+        $response=$this->putJson('/api/create-hashtag',$data);
+        $response->assertJsonStructure(['tag'=>['weekday']]);
+        $response->assertStatus(201);
+        $response->assertJsonCount(1);
     }
 }

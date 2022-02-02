@@ -17,7 +17,7 @@ class HashTagFactory extends Factory
         $userid=User::factory()->create()->getOriginal('id');
         return [
             'weekday'=>$this->faker->dayOfWeek,
-            'tag'=>$this->faker->realText,
+            'tags'=>$this->faker->realText,
             'status'=>$this->faker->numberBetween([0,1]),
             'user_id'=>$userid
         ];

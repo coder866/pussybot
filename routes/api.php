@@ -1,6 +1,4 @@
 <?php
-
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HashTagsController;
 
@@ -19,4 +17,4 @@ use App\Http\Controllers\HashTagsController;
 //    return $request->user();
 //});
 
- Route::post('create-hashtag',[HashTagsController::class,'store'])->name('create-hashtag');
+ Route::resource('create-hashtag',HashTagsController::class);

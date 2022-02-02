@@ -45,12 +45,12 @@ class CreateWeeklyHashTagsTest extends TestCase
     }
     public function test_Can_Update_Hash_tag(){
         $hashTag=Hashtag::factory(1)->create();
-        $data=[
-            $hashTag->weekday,
-        ];
-        $response=$this->putJson('/api/create-hashtag',$data);
+
+        $response=$this->putJson('/api/create-hashtag',['tags'=>'#Monday,#MondayMotivation']);
+
         $response->assertJsonStructure(['tag'=>['weekday']]);
         $response->assertStatus(201);
         $response->assertJsonCount(1);
+//        //Thick as Thiefs # Ocean Eleven
     }
 }

@@ -37,7 +37,7 @@ class customfunc
     {
         // $tweetText= SELF::getRandomZenQuote().PHP_EOL.SELF::getTrendingByWoeid(1528488).",#CatLove";
         $tweetText =
-            SELF::getRandomZenQuote() . PHP_EOL . "#MondayVibes,#MotivationMonday,#MeowMonday,#InspiredKitty,#KittyLove,#BlackBoxThinking,#Kitty,#CatsOfTwitter";
+            SELF::getRandomZenQuote() . PHP_EOL . "#InspiredKitty,#KittyLove,#Kitty,#CatsOfTwitter,#BlackboxThinking,#WednesdayVibes,#Wednesday,#MeowWednesday";
         woeid::create([
             'loc' => 'kenya',
             'tweet' => $tweetText,
@@ -173,17 +173,11 @@ class customfunc
     {
         $keywordSato = collect(
             [
-                'Forgiveness',
-                'Freedom',
-                'Future',
-                'Happiness',
                 'Inspiration',
-                'Kindness',
                 'Leadership',
                 'Anxiety',
                 'Change',
                 'Choice',
-                'Confidence',
                 'Courage',
                 'Death',
                 'Dreams',
@@ -191,7 +185,6 @@ class customfunc
                 'Pain',
                 'Past',
                 'Time',
-                'Today',
 
             ]
         );

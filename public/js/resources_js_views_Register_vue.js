@@ -12,6 +12,60 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _assets_img_registercat_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/registercat.jpg */ "./resources/js/assets/img/registercat.jpg");
+/* harmony import */ var _services_Authservice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/Authservice */ "./resources/js/services/Authservice.js");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -73,6 +127,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -84,6 +139,21 @@ __webpack_require__.r(__webpack_exports__);
         confirmpassword: ""
       }
     };
+  },
+  methods: {
+    registerUser: function registerUser() {
+      var _this = this;
+
+      this.$refs.registrationValidation.validate().then(function (success) {
+        if (success) {
+          _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(_this.user).the(function (resp) {
+            console.log(resp);
+          })["catch"](function (error) {
+            console.log(error);
+          });
+        }
+      });
+    }
   }
 });
 
@@ -191,7 +261,7 @@ var render = function () {
     "div",
     {
       staticClass:
-        "\n    bg-blue-50 bg-clip-padding\n    h-screen\n    justify-items-center\n    lg:justify-items-center\n  ",
+        "bg-blue-50 bg-clip-padding h-screen justify-items-center lg:justify-items-center",
     },
     [
       _c("div", { staticClass: "grid grid-cols-1 lg:grid-cols-2 gap-0 p-5" }, [
@@ -217,126 +287,358 @@ var render = function () {
                 staticClass: "grid overflow-hidden bg-white h-auto w-full p-3",
               },
               [
-                _c("div", { staticClass: "ui-form p-10" }, [
-                  _c("p", { staticClass: "text-blue-400 text-2xl mb-2" }, [
-                    _vm._v("Create Account,"),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-primary mt-2" }, [
-                    _vm._v("Fill in your Sweet as requested..."),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _c("input", {
-                      directives: [
+                _c(
+                  "div",
+                  { staticClass: "ui-form p-10" },
+                  [
+                    _c("p", { staticClass: "text-blue-400 text-2xl mb-2" }, [
+                      _vm._v(
+                        "\n                        Create Account,\n                    "
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "text-primary mt-2" }, [
+                      _vm._v(
+                        "\n                        Fill in your Sweet as requested...\n                    "
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("ValidationObserver", {
+                      ref: "registrationValidation",
+                      scopedSlots: _vm._u([
                         {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.name,
-                          expression: "user.name",
+                          key: "default",
+                          fn: function (ref) {
+                            var invalid = ref.invalid
+                            return [
+                              _c(
+                                "form",
+                                {
+                                  staticClass: "registration-form",
+                                  on: {
+                                    submit: function ($event) {
+                                      $event.preventDefault()
+                                      return _vm.registerUser.apply(
+                                        null,
+                                        arguments
+                                      )
+                                    },
+                                  },
+                                },
+                                [
+                                  _c("ValidationProvider", {
+                                    attrs: {
+                                      name: "Name",
+                                      rules: "required|min:3",
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "default",
+                                          fn: function (ref) {
+                                            var errors = ref.errors
+                                            return [
+                                              _c(
+                                                "div",
+                                                { staticClass: "form-control" },
+                                                [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.user.name,
+                                                        expression: "user.name",
+                                                      },
+                                                    ],
+                                                    staticClass:
+                                                      "input input-primary input-bordered mt-3",
+                                                    attrs: {
+                                                      type: "text",
+                                                      placeholder: "Full Names",
+                                                    },
+                                                    domProps: {
+                                                      value: _vm.user.name,
+                                                    },
+                                                    on: {
+                                                      input: function ($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.user,
+                                                          "name",
+                                                          $event.target.value
+                                                        )
+                                                      },
+                                                    },
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "small",
+                                                    {
+                                                      staticClass: "text-error",
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          },
+                                        },
+                                      ],
+                                      null,
+                                      true
+                                    ),
+                                  }),
+                                  _vm._v(" "),
+                                  _c("ValidationProvider", {
+                                    attrs: {
+                                      name: "Email",
+                                      rules: "required|email",
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "default",
+                                          fn: function (ref) {
+                                            var errors = ref.errors
+                                            return [
+                                              _c(
+                                                "div",
+                                                { staticClass: "form-control" },
+                                                [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value: _vm.user.email,
+                                                        expression:
+                                                          "user.email",
+                                                      },
+                                                    ],
+                                                    staticClass:
+                                                      "input input-primary input-bordered mt-3",
+                                                    attrs: {
+                                                      type: "text",
+                                                      placeholder: "email",
+                                                    },
+                                                    domProps: {
+                                                      value: _vm.user.email,
+                                                    },
+                                                    on: {
+                                                      input: function ($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.user,
+                                                          "email",
+                                                          $event.target.value
+                                                        )
+                                                      },
+                                                    },
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "small",
+                                                    {
+                                                      staticClass: "text-error",
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          },
+                                        },
+                                      ],
+                                      null,
+                                      true
+                                    ),
+                                  }),
+                                  _vm._v(" "),
+                                  _c("ValidationProvider", {
+                                    attrs: {
+                                      name: "Password",
+                                      rules: "required|min:8|max:12",
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "default",
+                                          fn: function (ref) {
+                                            var errors = ref.errors
+                                            return [
+                                              _c(
+                                                "div",
+                                                { staticClass: "form-control" },
+                                                [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.user.password,
+                                                        expression:
+                                                          "user.password",
+                                                      },
+                                                    ],
+                                                    staticClass:
+                                                      "input input-primary input-bordered mt-3",
+                                                    attrs: {
+                                                      type: "password",
+                                                      placeholder: "Password",
+                                                    },
+                                                    domProps: {
+                                                      value: _vm.user.password,
+                                                    },
+                                                    on: {
+                                                      input: function ($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.user,
+                                                          "password",
+                                                          $event.target.value
+                                                        )
+                                                      },
+                                                    },
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "small",
+                                                    {
+                                                      staticClass: "text-error",
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          },
+                                        },
+                                      ],
+                                      null,
+                                      true
+                                    ),
+                                  }),
+                                  _vm._v(" "),
+                                  _c("ValidationProvider", {
+                                    attrs: {
+                                      name: "Confirm Password",
+                                      rules: "required|confirmed:Password",
+                                    },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "default",
+                                          fn: function (ref) {
+                                            var errors = ref.errors
+                                            return [
+                                              _c(
+                                                "div",
+                                                { staticClass: "form-control" },
+                                                [
+                                                  _c("input", {
+                                                    directives: [
+                                                      {
+                                                        name: "model",
+                                                        rawName: "v-model",
+                                                        value:
+                                                          _vm.user
+                                                            .confirmpassword,
+                                                        expression:
+                                                          "user.confirmpassword",
+                                                      },
+                                                    ],
+                                                    staticClass:
+                                                      "input input-primary input-bordered mt-3",
+                                                    attrs: {
+                                                      type: "password",
+                                                      placeholder:
+                                                        "Password Confirmation",
+                                                    },
+                                                    domProps: {
+                                                      value:
+                                                        _vm.user
+                                                          .confirmpassword,
+                                                    },
+                                                    on: {
+                                                      input: function ($event) {
+                                                        if (
+                                                          $event.target
+                                                            .composing
+                                                        ) {
+                                                          return
+                                                        }
+                                                        _vm.$set(
+                                                          _vm.user,
+                                                          "confirmpassword",
+                                                          $event.target.value
+                                                        )
+                                                      },
+                                                    },
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "small",
+                                                    {
+                                                      staticClass: "text-error",
+                                                    },
+                                                    [_vm._v(_vm._s(errors[0]))]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          },
+                                        },
+                                      ],
+                                      null,
+                                      true
+                                    ),
+                                  }),
+                                  _vm._v(" "),
+                                  _c("br"),
+                                  _vm._v(" "),
+                                  _c("div", { staticClass: "form-control" }, [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-primary btn-block",
+                                        attrs: { type: "submit" },
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                    Submit Details\n                                "
+                                        ),
+                                      ]
+                                    ),
+                                  ]),
+                                ],
+                                1
+                              ),
+                            ]
+                          },
                         },
-                      ],
-                      staticClass: "input input-primary input-bordered mt-3",
-                      attrs: { type: "text", placeholder: "Full Names" },
-                      domProps: { value: _vm.user.name },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "name", $event.target.value)
-                        },
-                      },
+                      ]),
                     }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.email,
-                          expression: "user.email",
-                        },
-                      ],
-                      staticClass: "input input-primary input-bordered mt-3",
-                      attrs: { type: "text", placeholder: "email" },
-                      domProps: { value: _vm.user.email },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "email", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.password,
-                          expression: "user.password",
-                        },
-                      ],
-                      staticClass: "input input-primary input-bordered mt-3",
-                      attrs: { type: "password", placeholder: "Password" },
-                      domProps: { value: _vm.user.password },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.user, "password", $event.target.value)
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.user.confirmpassword,
-                          expression: "user.confirmpassword",
-                        },
-                      ],
-                      staticClass: "input input-primary input-bordered mt-3",
-                      attrs: {
-                        type: "password",
-                        placeholder: "Password Confirmation",
-                      },
-                      domProps: { value: _vm.user.confirmpassword },
-                      on: {
-                        input: function ($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.user,
-                            "confirmpassword",
-                            $event.target.value
-                          )
-                        },
-                      },
-                    }),
-                  ]),
-                  _vm._v(" "),
-                  _c("br"),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-control" }),
-                  _vm._v(" "),
-                  _c("button", { staticClass: "btn btn-primary btn-block" }, [
-                    _vm._v("Submit Details"),
-                  ]),
-                ]),
+                  ],
+                  1
+                ),
               ]
             ),
           ]

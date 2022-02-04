@@ -17,43 +17,45 @@
                                 Please LogIn to explore..
                             </p>
                         </span>
-                        <ValidationObserver ref="loginValidation">
-                            <form @submit.prevent>
-                                <div class="form-control">
-                                    <ValidationProvider
-                                        #default="{ errors }"
-                                        name="Email"
-                                        rules="required|email"
-                                    >
+                        <ValidationObserver
+                            v-slot="{ invalid }"
+                            ref="loginValidation"
+                        >
+                            <form @submit.prevent="login">
+                                <ValidationProvider
+                                    v-slot="{ errors }"
+                                    name="Email"
+                                    rules="required|email"
+                                >
+                                    <div class="form-control">
                                         <input
                                             type="text"
                                             placeholder="username"
                                             class="input input-primary input-bordered mt-2 w-full"
                                             v-model="user.username"
                                         />
-
-                                        <small class="text-danger">{{
+                                        <small class="text-error">{{
                                             errors[0]
                                         }}</small>
-                                    </ValidationProvider>
-                                </div>
-                                <div class="form-control">
-                                    <ValidationProvider
-                                        #default="{ errors }"
-                                        name="Password"
-                                        rules="required"
-                                    >
+                                    </div>
+                                </ValidationProvider>
+                                <ValidationProvider
+                                    v-slot="{ errors }"
+                                    name="Password"
+                                    rules="required|min:6|max:12"
+                                >
+                                    <div class="form-control">
                                         <input
                                             type="password"
                                             placeholder="Password"
                                             class="input input-primary input-bordered mt-4 w-full"
                                             v-model="user.password"
                                         />
-                                        <small class="text-danger">{{
+                                        <small class="text-error">{{
                                             errors[0]
                                         }}</small>
-                                    </ValidationProvider>
-                                </div>
+                                    </div>
+                                </ValidationProvider>
                                 <div class="form-control mt-3">
                                     <button
                                         type="submit"
@@ -84,13 +86,9 @@
 
 <script>
 import logincat from "../assets/img/logincat.jpeg";
-import { ValidationProvider, ValidationObserver, extend } from "vee-validate";
 import authService from "../services/Authservice";
 export default {
-    components: {
-        ValidationProvider,
-        ValidationObserver,
-    },
+    components: {},
     data() {
         return {
             bgImg: logincat,
@@ -102,9 +100,23 @@ export default {
     },
     methods: {
         login() {
-            console.log("Clicked");
-            this.$refs.loginValidation.validate().then((success) => {});
-            //authService.login(this.user);
+            this.$refs.loginValidation.validate().then((success) => {
+                if (success) {
+                    authService
+                        .login(this.user)
+                        .then((response) => {
+                            console.log("response=", response);
+                        })
+                        .catch((error) => {
+                            console.log("error", error);
+                            this.$swal(
+                                "error",
+                                this.$store.getters["auth/messages"],
+                                "error"
+                            );
+                        });
+                }
+            });
         },
     },
 };

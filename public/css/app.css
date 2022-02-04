@@ -1704,12 +1704,6 @@ html {
 .drawer-toggle:focus-visible~.drawer-content .drawer-button.btn-primary {
   box-shadow: 0 0 0 2px hsl(var(--b1)), 0 0 0 4px hsl(var(--p));
 }
-.label-text {
-  font-size: .875rem;
-  line-height: 1.25rem;
-  --tw-text-opacity: 1;
-  color: hsla(var(--bc) / var(--tw-text-opacity, 1));
-}
 .label a:hover {
   --tw-text-opacity: 1;
   color: hsla(var(--bc) / var(--tw-text-opacity, 1));
@@ -1955,14 +1949,14 @@ html {
 .mt-2 {
   margin-top: 0.5rem;
 }
+.mt-3 {
+  margin-top: 0.75rem;
+}
 .mt-20 {
   margin-top: 5rem;
 }
 .mb-2 {
   margin-bottom: 0.5rem;
-}
-.mt-3 {
-  margin-top: 0.75rem;
 }
 .block {
   display: block;
@@ -2355,6 +2349,10 @@ html {
 .text-purple-900 {
   --tw-text-opacity: 1;
   color: rgb(88 28 135 / var(--tw-text-opacity));
+}
+.text-error {
+  --tw-text-opacity: 1;
+  color: hsla(var(--er) / var(--tw-text-opacity));
 }
 .no-underline {
   -webkit-text-decoration-line: none;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import store from "@/store";
+import store from "../store";
 
 export const authClient = axios.create({
     baseURL: "http://pussybot.test",
@@ -22,7 +22,8 @@ authClient.interceptors.response.use(
             [401, 419].includes(error.response.status) &&
             store.getters["authUser"]
         ) {
-            store.dispatch("logout");
+            console.log('We need to logout');
+            //store.dispatch("logout");
         }
         return Promise.reject(error);
     }

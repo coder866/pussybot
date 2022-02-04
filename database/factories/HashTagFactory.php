@@ -18,7 +18,7 @@ class HashTagFactory extends Factory
         return [
             'weekday'=>$this->faker->dayOfWeek,
             'tags'=>$this->faker->realText,
-            'status'=>$this->faker->numberBetween([0,1]),
+            'status'=>$this->faker->randomDigitNotNull(),
             'user_id'=>$userid
         ];
     }

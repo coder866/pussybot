@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use phpDocumentor\Reflection\Types\Integer;
 use Throwable;
 
 class HashTagsController extends Controller
@@ -20,7 +21,7 @@ class HashTagsController extends Controller
      */
     public function index()
     {
-        return response()->json(['data'=>Hashtag::all()],200);
+            return response()->json(Hashtag::all(),200);
     }
 
 
@@ -58,7 +59,7 @@ class HashTagsController extends Controller
      * @param  int  $id
      * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         try {
             $validator=Validator::make($request->all(),[
@@ -72,10 +73,9 @@ class HashTagsController extends Controller
             }
 
             $hashtag=Hashtag::findorfail($id);
+            $res=$hashtag->update($request->all());
 
-            $hashtag->update($request->all());
-
-            return response()->json(['tag'=>$hashtag],201);
+            return response()->json(['tag'=>$res],201);
 
         } catch (throwable $th) {
             return response()->json(['message'=>$th->getMessage()],500) ;

@@ -150,11 +150,17 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$refs.registrationValidation.validate().then(function (success) {
         if (success) {
-          _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(_this.user).then(function (resp) {
+          _this.$store.dispatch("auth/registerUser", _this.user).then(function () {
+            console.log("ERRRRROR::", _this.$store.getters['auth/error']);
             console.log("Message::", _this.$store.getters['auth/getMessages']);
-          })["catch"](function (error) {
-            console.log(error);
-          });
+          }); // authservice.registerUser(this.user)
+          //     .then((resp) => {
+          //         console.log("Message::",this.$store.getters['auth/getMessages']);
+          //     })
+          //     .catch((error) => {
+          //         console.log(error);
+          //     });
+
         }
       });
     }

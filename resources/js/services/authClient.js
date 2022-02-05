@@ -12,15 +12,17 @@ export const authClient = axios.create({
 authClient.interceptors.response.use(
     (response) => {
         console.log("INTERCEPT RES", response);
-       if(response.status==200) {store.dispatch("auth/setMessages", response.data.error)}
+        if(response.status==201) {store.dispatch("auth/setError", false);store.dispatch("auth/getAuthUser")}
+        if(response.status==200) {store.dispatch("auth/setError", false);store.dispatch("auth/setMessages", response.data.error)}
 
         return response;
     },
     (error) => {
         //console.log('INTERCEPT HEADERS', error.response.headers)
-        console.log("INTERCEPT ERR", error.response);
+        console.log("INTERCEPT ERR", error.response.data);
         if (error.response && [401, 419, 422].includes(error.response.status)) {
-            store.dispatch("auth/setMessages", error.response.data.message);
+            store.dispatch("auth/setError", true);
+            store.dispatch("auth/setMessages", error.response.data);
         }
         return Promise.reject(error);
     }

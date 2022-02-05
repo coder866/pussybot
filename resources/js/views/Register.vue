@@ -115,7 +115,7 @@
 <script>
 import registercat from "../assets/img/registercat.jpg";
 import authservice from "../services/Authservice";
-import store from '../store';
+import store from "../store";
 export default {
     components: {},
     data() {
@@ -125,7 +125,7 @@ export default {
                 name: "",
                 email: "",
                 password: "",
-                password_confirmation :"",
+                password_confirmation: "",
             },
         };
     },
@@ -133,13 +133,22 @@ export default {
         registerUser() {
             this.$refs.registrationValidation.validate().then((success) => {
                 if (success) {
-                    authservice.registerUser(this.user)
-                        .then((resp) => {
-                            console.log("Message::",this.$store.getters['auth/getMessages']);
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                        });
+                    this.$store.dispatch("auth/registerUser", this.user).then(()=>{
+                        console.log("ERRRRROR::",this.$store.getters['auth/error']);
+                        console.log("Message::",this.$store.getters['auth/getMessages']);
+                    });
+
+
+
+                    // authservice.registerUser(this.user)
+                    //     .then((resp) => {
+                    //         console.log("Message::",this.$store.getters['auth/getMessages']);
+                    //     })
+                    //     .catch((error) => {
+                    //         console.log(error);
+                    //     });
+
+
                 }
             });
         },

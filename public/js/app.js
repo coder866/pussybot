@@ -2432,17 +2432,24 @@ var authClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
 authClient.interceptors.response.use(function (response) {
   console.log("INTERCEPT RES", response);
 
+  if (response.status == 201) {
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", false);
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/getAuthUser");
+  }
+
   if (response.status == 200) {
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", false);
     _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", response.data.error);
   }
 
   return response;
 }, function (error) {
   //console.log('INTERCEPT HEADERS', error.response.headers)
-  console.log("INTERCEPT ERR", error.response);
+  console.log("INTERCEPT ERR", error.response.data);
 
   if (error.response && [401, 419, 422].includes(error.response.status)) {
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", error.response.data.message);
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", true);
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", error.response.data);
   }
 
   return Promise.reject(error);
@@ -2465,16 +2472,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "actions": () => (/* binding */ actions),
 /* harmony export */   "getters": () => (/* binding */ getters)
 /* harmony export */ });
-/* harmony import */ var _services_Authservice__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/Authservice */ "./resources/js/services/Authservice.js");
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _services_Authservice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../services/Authservice */ "./resources/js/services/Authservice.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../router */ "./resources/js/router/index.js");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 
 
 var namespaced = true;
 var state = {
   user: null,
   loading: false,
-  error: null,
-  messages: null
+  error: false,
+  messages: {}
 };
 var mutations = {
   SET_USER: function SET_USER(state, user) {
@@ -2487,28 +2502,69 @@ var mutations = {
   SET_MESSAGE: function SET_MESSAGE(state, message) {
     state.messages = message;
   },
-  SET_ERROR: function SET_ERROR(state, error) {
-    state.error = error;
+  SET_ERROR: function SET_ERROR(state) {
+    var errorState = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    state.error = errorState;
   }
 };
 var actions = {
   logout: function logout(_ref) {
     var commit = _ref.commit;
     console.log("DISPATCHED");
-    return _services_Authservice__WEBPACK_IMPORTED_MODULE_0__["default"].logout().then(function () {
+    return _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].logout().then(function () {
       commit("SET_USER", null);
-      _router__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+      _router__WEBPACK_IMPORTED_MODULE_2__["default"].push({
         name: "login"
       });
     })["catch"](function (error) {
-      commit("SET_ERROR", error);
+      commit("SET_ERROR", true);
+      commit("SET_MESSAGE", error);
     });
   },
-  getAuthUser: function getAuthUser(_ref2) {
-    var commit = _ref2.commit;
+  registerUser: function registerUser(_ref2, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              commit = _ref2.commit;
+              console.log("DISPATCHED register");
+              commit("SET_LOADING", true);
+              return _context.abrupt("return", _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(payload).then(function (response) {
+                console.log("DISP-RESP", response.data);
+                commit("SET_USER", response.data);
+                commit("SET_LOADING", false);
+                console.log("ST-USER", state);
+                commit("SET_ERROR", false);
+                commit("SET_MESSAGE", {
+                  "message": "User Registered Successfully"
+                });
+              })["catch"](function (error) {
+                console.log("ERROR", error);
+                commit("SET_LOADING", false);
+                commit("SET_USER", null); // commit("SET_USER_ROLES", null);
+
+                // commit("SET_USER_ROLES", null);
+                commit("SET_ERROR", 1);
+                commit("SET_MESSAGE", {
+                  "message": "error"
+                });
+              }));
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }))();
+  },
+  getAuthUser: function getAuthUser(_ref3) {
+    var commit = _ref3.commit;
     console.log("DISPATCHED getUser");
     commit("SET_LOADING", true);
-    return _services_Authservice__WEBPACK_IMPORTED_MODULE_0__["default"].getAuthUser().then(function (response) {
+    return _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].getAuthUser().then(function (response) {
       console.log("DISP-RESP", response.data.data.user);
       commit("SET_USER", response.data.data.user);
       commit("SET_LOADING", false);
@@ -2516,14 +2572,20 @@ var actions = {
     })["catch"](function (error) {
       console.log("ERROR", error);
       commit("SET_LOADING", false);
-      commit("SET_USER", null);
-      commit("SET_USER_ROLES", null);
-      commit("SET_ERROR", error);
+      commit("SET_USER", null); // commit("SET_USER_ROLES", null);
+
+      commit("SET_ERROR", 1);
+      commit("SET_MESSAGE", error);
     });
   },
-  setMessages: function setMessages(_ref3, payload) {
-    var commit = _ref3.commit;
+  setMessages: function setMessages(_ref4, payload) {
+    var commit = _ref4.commit;
+    console.log("BAYLOAD", payload);
     commit("SET_MESSAGE", payload);
+  },
+  setError: function setError(_ref5, payload) {
+    var commit = _ref5.commit;
+    commit("SET_ERROR", payload);
   }
 };
 var getters = {
@@ -2548,7 +2610,7 @@ var getters = {
     return !!state.user;
   },
   getMessages: function getMessages(state) {
-    console.log('MEEEEESAGEEE', state.messages);
+    console.log("MEEEEESAGEEE", state.messages);
     return state.messages;
   }
 };

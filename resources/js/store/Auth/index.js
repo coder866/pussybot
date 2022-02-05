@@ -5,8 +5,8 @@ export const namespaced = true;
 export const state = {
     user: null,
     loading: false,
-    error: null,
-    messages: null,
+    error: false,
+    messages: {},
 };
 export const mutations = {
     SET_USER(state, user) {
@@ -19,8 +19,8 @@ export const mutations = {
     SET_MESSAGE(state, message) {
         state.messages = message;
     },
-    SET_ERROR(state, error) {
-        state.error = error;
+    SET_ERROR(state, errorState = false) {
+        state.error = errorState;
     },
 };
 
@@ -34,7 +34,30 @@ export const actions = {
                 router.push({ name: "login" });
             })
             .catch((error) => {
-                commit("SET_ERROR", error);
+                commit("SET_ERROR", true);
+                commit("SET_MESSAGE", error);
+            });
+    },
+    async registerUser({ commit }, payload) {
+        console.log("DISPATCHED register");
+        commit("SET_LOADING", true);
+        return authService
+            .registerUser(payload)
+            .then((response) => {
+                console.log("DISP-RESP", response.data);
+                commit("SET_USER", response.data);
+                commit("SET_LOADING", false);
+                console.log("ST-USER", state);
+                commit("SET_ERROR", false);
+                commit("SET_MESSAGE", {"message":"User Registered Successfully"});
+            })
+            .catch((error) => {
+                console.log("ERROR", error);
+                commit("SET_LOADING", false);
+                commit("SET_USER", null);
+                // commit("SET_USER_ROLES", null);
+                commit("SET_ERROR", 1);
+                commit("SET_MESSAGE", {"message":"error"});
             });
     },
     getAuthUser({ commit }) {
@@ -52,12 +75,17 @@ export const actions = {
                 console.log("ERROR", error);
                 commit("SET_LOADING", false);
                 commit("SET_USER", null);
-                commit("SET_USER_ROLES", null);
-                commit("SET_ERROR", error);
+                // commit("SET_USER_ROLES", null);
+                commit("SET_ERROR", 1);
+                commit("SET_MESSAGE", error);
             });
     },
     setMessages({ commit }, payload) {
+        console.log("BAYLOAD", payload);
         commit("SET_MESSAGE", payload);
+    },
+    setError({ commit }, payload) {
+        commit("SET_ERROR", payload);
     },
 };
 export const getters = {
@@ -82,7 +110,7 @@ export const getters = {
         return !!state.user;
     },
     getMessages: (state) => {
-        console.log('MEEEEESAGEEE',state.messages);
+        console.log("MEEEEESAGEEE", state.messages);
         return state.messages;
     },
 };

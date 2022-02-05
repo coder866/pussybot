@@ -2430,7 +2430,12 @@ var authClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
  */
 
 authClient.interceptors.response.use(function (response) {
-  console.log("INTERCEPT RES", response.headers["set-cookie"]);
+  console.log("INTERCEPT RES", response);
+
+  if (response.status == 200) {
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", response.data.error);
+  }
+
   return response;
 }, function (error) {
   //console.log('INTERCEPT HEADERS', error.response.headers)
@@ -2480,7 +2485,7 @@ var mutations = {
     state.loading = loading;
   },
   SET_MESSAGE: function SET_MESSAGE(state, message) {
-    state.message = message;
+    state.messages = message;
   },
   SET_ERROR: function SET_ERROR(state, error) {
     state.error = error;
@@ -2542,46 +2547,8 @@ var getters = {
     console.log("LOGGEDIN GETTER", state.user);
     return !!state.user;
   },
-  messages: function messages(state) {
-    return state.message;
-  }
-};
-
-/***/ }),
-
-/***/ "./resources/js/store/Messages/index.js":
-/*!**********************************************!*\
-  !*** ./resources/js/store/Messages/index.js ***!
-  \**********************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "namespaced": () => (/* binding */ namespaced),
-/* harmony export */   "state": () => (/* binding */ state),
-/* harmony export */   "mutations": () => (/* binding */ mutations),
-/* harmony export */   "actions": () => (/* binding */ actions),
-/* harmony export */   "getters": () => (/* binding */ getters)
-/* harmony export */ });
-var namespaced = true;
-var state = {
-  messages: []
-};
-var mutations = {
-  SET_MESSAGE: function SET_MESSAGE(state, messages) {
-    state.messages = messages;
-  }
-};
-var actions = {
-  setMessages: function setMessages(_ref, msgPlayload) {
-    var commit = _ref.commit;
-    commit("SET_LOADING", true);
-    commit("SET_MESSAGE", msgPlayload);
-  }
-};
-var getters = {
-  messages: function messages(state) {
+  getMessages: function getMessages(state) {
+    console.log('MEEEEESAGEEE', state.messages);
     return state.messages;
   }
 };
@@ -2599,19 +2566,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Auth */ "./resources/js/store/Auth/index.js");
-/* harmony import */ var _Messages__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Messages */ "./resources/js/store/Messages/index.js");
 
 
 
-
-vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_3__["default"]);
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_3__["default"].Store({
+vue__WEBPACK_IMPORTED_MODULE_1__["default"].use(vuex__WEBPACK_IMPORTED_MODULE_2__["default"]);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new vuex__WEBPACK_IMPORTED_MODULE_2__["default"].Store({
   modules: {
-    auth: _Auth__WEBPACK_IMPORTED_MODULE_0__,
-    messages: _Messages__WEBPACK_IMPORTED_MODULE_1__
+    auth: _Auth__WEBPACK_IMPORTED_MODULE_0__
   }
 }));
 

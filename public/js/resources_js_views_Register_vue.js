@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _assets_img_registercat_jpg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/registercat.jpg */ "./resources/js/assets/img/registercat.jpg");
 /* harmony import */ var _services_Authservice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/Authservice */ "./resources/js/services/Authservice.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
 //
 //
 //
@@ -126,9 +127,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  components: {},
   data: function data() {
     return {
       bgImg: _assets_img_registercat_jpg__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -136,7 +140,7 @@ __webpack_require__.r(__webpack_exports__);
         name: "",
         email: "",
         password: "",
-        confirmpassword: ""
+        password_confirmation: ""
       }
     };
   },
@@ -146,8 +150,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$refs.registrationValidation.validate().then(function (success) {
         if (success) {
-          _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(_this.user).the(function (resp) {
-            console.log(resp);
+          _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(_this.user).then(function (resp) {
+            console.log("Message::", _this.$store.getters['auth/getMessages']);
           })["catch"](function (error) {
             console.log(error);
           });
@@ -468,7 +472,7 @@ var render = function () {
                                   _c("ValidationProvider", {
                                     attrs: {
                                       name: "Password",
-                                      rules: "required|min:8|max:12",
+                                      rules: "required|min:6|max:12",
                                     },
                                     scopedSlots: _vm._u(
                                       [
@@ -559,9 +563,9 @@ var render = function () {
                                                         rawName: "v-model",
                                                         value:
                                                           _vm.user
-                                                            .confirmpassword,
+                                                            .password_confirmation,
                                                         expression:
-                                                          "user.confirmpassword",
+                                                          "user.password_confirmation",
                                                       },
                                                     ],
                                                     staticClass:
@@ -574,7 +578,7 @@ var render = function () {
                                                     domProps: {
                                                       value:
                                                         _vm.user
-                                                          .confirmpassword,
+                                                          .password_confirmation,
                                                     },
                                                     on: {
                                                       input: function ($event) {
@@ -586,7 +590,7 @@ var render = function () {
                                                         }
                                                         _vm.$set(
                                                           _vm.user,
-                                                          "confirmpassword",
+                                                          "password_confirmation",
                                                           $event.target.value
                                                         )
                                                       },

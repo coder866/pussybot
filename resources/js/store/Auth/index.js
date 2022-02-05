@@ -17,7 +17,7 @@ export const mutations = {
         state.loading = loading;
     },
     SET_MESSAGE(state, message) {
-        state.message = message;
+        state.messages = message;
     },
     SET_ERROR(state, error) {
         state.error = error;
@@ -81,7 +81,8 @@ export const getters = {
         console.log("LOGGEDIN GETTER", state.user);
         return !!state.user;
     },
-    messages: (state) => {
-        return state.message;
+    getMessages: (state) => {
+        console.log('MEEEEESAGEEE',state.messages);
+        return state.messages;
     },
 };

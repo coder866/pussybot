@@ -11,7 +11,9 @@ export const authClient = axios.create({
  */
 authClient.interceptors.response.use(
     (response) => {
-        console.log("INTERCEPT RES", response.headers["set-cookie"]);
+        console.log("INTERCEPT RES", response);
+       if(response.status==200) {store.dispatch("auth/setMessages", response.data.error)}
+
         return response;
     },
     (error) => {

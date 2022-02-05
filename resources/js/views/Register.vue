@@ -62,7 +62,7 @@
                                 <ValidationProvider
                                     v-slot="{ errors }"
                                     name="Password"
-                                    rules="required|min:8|max:12"
+                                    rules="required|min:6|max:12"
                                 >
                                     <div class="form-control">
                                         <input
@@ -71,6 +71,7 @@
                                             class="input input-primary input-bordered mt-3"
                                             v-model="user.password"
                                         />
+
                                         <small class="text-error">{{
                                             errors[0]
                                         }}</small>
@@ -86,7 +87,7 @@
                                             type="password"
                                             placeholder="Password Confirmation"
                                             class="input input-primary input-bordered mt-3"
-                                            v-model="user.confirmpassword"
+                                            v-model="user.password_confirmation"
                                         />
                                         <small class="text-error">{{
                                             errors[0]
@@ -114,7 +115,9 @@
 <script>
 import registercat from "../assets/img/registercat.jpg";
 import authservice from "../services/Authservice";
+import store from '../store';
 export default {
+    components: {},
     data() {
         return {
             bgImg: registercat,
@@ -122,7 +125,7 @@ export default {
                 name: "",
                 email: "",
                 password: "",
-                confirmpassword: "",
+                password_confirmation :"",
             },
         };
     },
@@ -130,10 +133,9 @@ export default {
         registerUser() {
             this.$refs.registrationValidation.validate().then((success) => {
                 if (success) {
-                    authservice
-                        .registerUser(this.user)
-                        .the((resp) => {
-                            console.log(resp);
+                    authservice.registerUser(this.user)
+                        .then((resp) => {
+                            console.log("Message::",this.$store.getters['auth/getMessages']);
                         })
                         .catch((error) => {
                             console.log(error);

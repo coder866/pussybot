@@ -15,7 +15,7 @@ export default {
     },
     async getAuthUser() {
         await authClient.get("/sanctum/csrf-cookie");
-        return authClient.get("/api/users/auth");
+        return authClient.get("/api/user/auth");
     },
     async resetPassword(payload) {
         await authClient.get("/sanctum/csrf-cookie");

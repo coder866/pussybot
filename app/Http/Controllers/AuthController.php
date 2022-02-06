@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Htpp\Traits\HttpResponseTrait;
+use App\Http\Traits\HttpResponseTrait;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
@@ -48,4 +48,8 @@ class AuthController extends Controller
     //         return $this->failure($th->getMessage());
     //     }
     // }
+    public function getAuthUser()
+    {
+        return $this->success("",Auth::User());
+    }
 }

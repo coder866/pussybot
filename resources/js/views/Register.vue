@@ -75,8 +75,11 @@
                                         <small class="text-error">{{
                                             errors[0]
                                         }}</small>
+
+
                                     </div>
                                 </ValidationProvider>
+
                                 <ValidationProvider
                                     v-slot="{ errors }"
                                     name="Confirm Password"
@@ -106,6 +109,9 @@
                             </form>
                         </ValidationObserver>
                     </div>
+                    <div class="text-error">
+<!--                        {{error.message}}-->
+                    </div>
                 </div>
             </div>
         </div>
@@ -127,27 +133,31 @@ export default {
                 password: "",
                 password_confirmation: "",
             },
+            error:null,
+            errorMsg:{},
         };
+    },
+    mounted(){
+        console.log("MOUNTED",this.$store.getters['auth/loggedIn']);
     },
     methods: {
         registerUser() {
             this.$refs.registrationValidation.validate().then((success) => {
                 if (success) {
                     this.$store.dispatch("auth/registerUser", this.user).then(()=>{
-                        console.log("ERRRRROR::",this.$store.getters['auth/error']);
-                        console.log("Message::",this.$store.getters['auth/getMessages']);
+                        if(this.$store.getters['auth/error']){
+                            this.error=this.$store.getters['auth/getMessages'];
+                            this.errorMsg={
+                                Email:this.error.message.errors.hasOwnProperty('email')?this.error.message.errors.email:[],
+                                Password:this.error.message.errors.hasOwnProperty('password')?this.error.message.errors.password:[],
+                            }
+                                this.$refs.registrationValidation.setErrors(this.errorMsg);
+                        }
+                       // store.dispatch("auth/getAuthUser");
+
+                        this.$swal("",this.$store.getters['auth/getMessages'].message,"error");
+                       // this.$router.push('/');
                     });
-
-
-
-                    // authservice.registerUser(this.user)
-                    //     .then((resp) => {
-                    //         console.log("Message::",this.$store.getters['auth/getMessages']);
-                    //     })
-                    //     .catch((error) => {
-                    //         console.log(error);
-                    //     });
-
 
                 }
             });

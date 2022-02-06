@@ -128,6 +128,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -141,8 +147,13 @@ __webpack_require__.r(__webpack_exports__);
         email: "",
         password: "",
         password_confirmation: ""
-      }
+      },
+      error: null,
+      errorMsg: {}
     };
+  },
+  mounted: function mounted() {
+    console.log("MOUNTED", this.$store.getters['auth/loggedIn']);
   },
   methods: {
     registerUser: function registerUser() {
@@ -151,16 +162,20 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.registrationValidation.validate().then(function (success) {
         if (success) {
           _this.$store.dispatch("auth/registerUser", _this.user).then(function () {
-            console.log("ERRRRROR::", _this.$store.getters['auth/error']);
-            console.log("Message::", _this.$store.getters['auth/getMessages']);
-          }); // authservice.registerUser(this.user)
-          //     .then((resp) => {
-          //         console.log("Message::",this.$store.getters['auth/getMessages']);
-          //     })
-          //     .catch((error) => {
-          //         console.log(error);
-          //     });
+            if (_this.$store.getters['auth/error']) {
+              _this.error = _this.$store.getters['auth/getMessages'];
+              _this.errorMsg = {
+                Email: _this.error.message.errors.hasOwnProperty('email') ? _this.error.message.errors.email : [],
+                Password: _this.error.message.errors.hasOwnProperty('password') ? _this.error.message.errors.password : []
+              };
 
+              _this.$refs.registrationValidation.setErrors(_this.errorMsg);
+            } // store.dispatch("auth/getAuthUser");
+
+
+            _this.$swal("", _this.$store.getters['auth/getMessages'].message, "error"); // this.$router.push('/');
+
+          });
         }
       });
     }
@@ -303,13 +318,13 @@ var render = function () {
                   [
                     _c("p", { staticClass: "text-blue-400 text-2xl mb-2" }, [
                       _vm._v(
-                        "\n                        Create Account,\n                    "
+                        "\n                            Create Account,\n                        "
                       ),
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "text-primary mt-2" }, [
                       _vm._v(
-                        "\n                        Fill in your Sweet as requested...\n                    "
+                        "\n                            Fill in your Sweet as requested...\n                        "
                       ),
                     ]),
                     _vm._v(" "),
@@ -633,7 +648,7 @@ var render = function () {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                    Submit Details\n                                "
+                                          "\n                                        Submit Details\n                                    "
                                         ),
                                       ]
                                     ),
@@ -649,6 +664,8 @@ var render = function () {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c("div", { staticClass: "text-error" }),
               ]
             ),
           ]

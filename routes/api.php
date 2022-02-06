@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HashTagsController;
+use App\Http\Controllers\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,8 +14,8 @@ use App\Http\Controllers\HashTagsController;
 |
 */
 
-//Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::get('/user/auth', [AuthController::class, 'getAuthUser']);
+});
 
  Route::resource('create-hashtag',HashTagsController::class);

@@ -38,18 +38,18 @@ export const actions = {
                 commit("SET_MESSAGE", error);
             });
     },
-    async registerUser({ commit }, payload) {
+    async registerUser({ commit,dispatch }, payload) {
         console.log("DISPATCHED register");
         commit("SET_LOADING", true);
         return authService
             .registerUser(payload)
             .then((response) => {
                 console.log("DISP-RESP", response.data);
-                commit("SET_USER", response.data);
                 commit("SET_LOADING", false);
                 console.log("ST-USER", state);
                 commit("SET_ERROR", false);
                 commit("SET_MESSAGE", {"message":"User Registered Successfully"});
+                dispatch('getAuthuser');
             })
             .catch((error) => {
                 console.log("ERROR", error);
@@ -57,17 +57,17 @@ export const actions = {
                 commit("SET_USER", null);
                 // commit("SET_USER_ROLES", null);
                 commit("SET_ERROR", 1);
-                commit("SET_MESSAGE", {"message":"error"});
+                commit("SET_MESSAGE", {"message":error});
             });
     },
-    getAuthUser({ commit }) {
+    getAuthUser({ commit}) {
         console.log("DISPATCHED getUser");
         commit("SET_LOADING", true);
         return authService
             .getAuthUser()
             .then((response) => {
-                console.log("DISP-RESP", response.data.data.user);
-                commit("SET_USER", response.data.data.user);
+                console.log("DISP-getUSSER-RESP", response.data);
+                commit("SET_USER", response.data);
                 commit("SET_LOADING", false);
                 console.log("ST-USER", state);
             })
@@ -106,7 +106,7 @@ export const getters = {
         return state.loading;
     },
     loggedIn: (state) => {
-        console.log("LOGGEDIN GETTER", state.user);
+        console.log("LOGGEDIN GETTER", state);
         return !!state.user;
     },
     getMessages: (state) => {

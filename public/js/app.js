@@ -2190,12 +2190,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _services_helper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/helper */ "./resources/js/services/helper.js");
 /* provided dependency */ var process = __webpack_require__(/*! process/browser.js */ "./node_modules/process/browser.js");
 
 
-vue__WEBPACK_IMPORTED_MODULE_0__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
+
+vue__WEBPACK_IMPORTED_MODULE_2__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]);
 var routes = [{
   path: "/",
   name: "dashboard",
@@ -2236,13 +2240,15 @@ var routes = [{
   path: "*",
   redirect: "/not-found"
 }];
-var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
+var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
   mode: "history",
   base: process.env.BASE_URL,
   routes: routes
 });
 router.beforeEach(function (to, from, next) {
-  var isAuthenticated = false;
+  console.log("HELPER STATE", (0,_services_helper__WEBPACK_IMPORTED_MODULE_1__.isAuthentcated)());
+  var isAuthenticated = _store__WEBPACK_IMPORTED_MODULE_0__["default"].getters["auth/loggedIn"];
+  console.log("LOGGED IN", isAuthenticated);
 
   if (!isAuthenticated && !to.meta["public"]) {
     next("/login");
@@ -2341,7 +2347,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _authClient__WEBPACK_IMPORTED_MODULE_1__.authClient.get("/sanctum/csrf-cookie");
 
             case 2:
-              return _context3.abrupt("return", _authClient__WEBPACK_IMPORTED_MODULE_1__.authClient.get("/api/users/auth"));
+              return _context3.abrupt("return", _authClient__WEBPACK_IMPORTED_MODULE_1__.authClient.get("/api/user/auth"));
 
             case 3:
             case "end":
@@ -2430,30 +2436,39 @@ var authClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
  */
 
 authClient.interceptors.response.use(function (response) {
-  console.log("INTERCEPT RES", response);
-
-  if (response.status == 201) {
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", false);
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/getAuthUser");
-  }
-
-  if (response.status == 200) {
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", false);
-    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", response.data.error);
-  }
+  console.log("INTERCEPT RES", response); //if(response.status==201) {store.dispatch("auth/setError", false);store.dispatch("auth/getAuthUser")}
 
   return response;
 }, function (error) {
   //console.log('INTERCEPT HEADERS', error.response.headers)
   console.log("INTERCEPT ERR", error.response.data);
 
-  if (error.response && [401, 419, 422].includes(error.response.status)) {
+  if (error.response && [401, 419].includes(error.response.status)) {
     _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", true);
     _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", error.response.data);
   }
 
   return Promise.reject(error);
 });
+
+/***/ }),
+
+/***/ "./resources/js/services/helper.js":
+/*!*****************************************!*\
+  !*** ./resources/js/services/helper.js ***!
+  \*****************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "isAuthentcated": () => (/* binding */ isAuthentcated)
+/* harmony export */ });
+/* harmony import */ var _store_index_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../store/index.js */ "./resources/js/store/index.js");
+
+var isAuthentcated = function isAuthentcated() {
+  return _store_index_js__WEBPACK_IMPORTED_MODULE_0__["default"].getters["auth/loggedIn"];
+};
 
 /***/ }),
 
@@ -2523,23 +2538,23 @@ var actions = {
   },
   registerUser: function registerUser(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
-      var commit;
+      var commit, dispatch;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              commit = _ref2.commit;
+              commit = _ref2.commit, dispatch = _ref2.dispatch;
               console.log("DISPATCHED register");
               commit("SET_LOADING", true);
               return _context.abrupt("return", _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(payload).then(function (response) {
                 console.log("DISP-RESP", response.data);
-                commit("SET_USER", response.data);
                 commit("SET_LOADING", false);
                 console.log("ST-USER", state);
                 commit("SET_ERROR", false);
                 commit("SET_MESSAGE", {
                   "message": "User Registered Successfully"
                 });
+                dispatch('getAuthuser');
               })["catch"](function (error) {
                 console.log("ERROR", error);
                 commit("SET_LOADING", false);
@@ -2548,7 +2563,7 @@ var actions = {
                 // commit("SET_USER_ROLES", null);
                 commit("SET_ERROR", 1);
                 commit("SET_MESSAGE", {
-                  "message": "error"
+                  "message": error
                 });
               }));
 
@@ -2565,8 +2580,8 @@ var actions = {
     console.log("DISPATCHED getUser");
     commit("SET_LOADING", true);
     return _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].getAuthUser().then(function (response) {
-      console.log("DISP-RESP", response.data.data.user);
-      commit("SET_USER", response.data.data.user);
+      console.log("DISP-getUSSER-RESP", response.data);
+      commit("SET_USER", response.data);
       commit("SET_LOADING", false);
       console.log("ST-USER", state);
     })["catch"](function (error) {
@@ -2606,7 +2621,7 @@ var getters = {
     return state.loading;
   },
   loggedIn: function loggedIn(state) {
-    console.log("LOGGEDIN GETTER", state.user);
+    console.log("LOGGEDIN GETTER", state);
     return !!state.user;
   },
   getMessages: function getMessages(state) {

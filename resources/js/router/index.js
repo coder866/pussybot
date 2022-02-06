@@ -1,5 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import store from '../store';
+import {isAuthentcated} from '../services/helper'
 
 Vue.use(VueRouter);
 
@@ -49,7 +51,9 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    var isAuthenticated = false;
+    console.log("HELPER STATE",isAuthentcated());
+    var isAuthenticated = store.getters['auth/loggedIn'];
+    console.log("LOGGED IN",isAuthenticated);
     if (!isAuthenticated && !to.meta.public) {
         next("/login");
     } else {

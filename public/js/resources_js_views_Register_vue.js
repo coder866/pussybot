@@ -132,8 +132,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 
@@ -153,7 +151,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.log("MOUNTED", this.$store.getters['auth/loggedIn']);
+    console.log("MOUNTED", this.$store.getters["auth/loggedIn"]);
   },
   methods: {
     registerUser: function registerUser() {
@@ -162,18 +160,19 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs.registrationValidation.validate().then(function (success) {
         if (success) {
           _this.$store.dispatch("auth/registerUser", _this.user).then(function () {
-            if (_this.$store.getters['auth/error']) {
-              _this.error = _this.$store.getters['auth/getMessages'];
-              _this.errorMsg = {
-                Email: _this.error.message.errors.hasOwnProperty('email') ? _this.error.message.errors.email : [],
-                Password: _this.error.message.errors.hasOwnProperty('password') ? _this.error.message.errors.password : []
-              };
+            if (_this.$store.getters["auth/error"]) {
+              _this.error = _this.$store.getters["auth/getMessages"];
+              var keys = Object.keys(_this.error.errors);
+              _this.errorMsg = {};
+              keys.forEach(function (key, index) {
+                _this.errorMsg[key] = _this.error.errors[key];
+              });
 
               _this.$refs.registrationValidation.setErrors(_this.errorMsg);
             } // store.dispatch("auth/getAuthUser");
 
 
-            _this.$swal("", _this.$store.getters['auth/getMessages'].message, "error"); // this.$router.push('/');
+            _this.$swal("", _this.$store.getters["auth/getMessages"].message, _this.error ? "error" : "success"); // this.$router.push('/');
 
           });
         }
@@ -290,14 +289,10 @@ var render = function () {
     },
     [
       _c("div", { staticClass: "grid grid-cols-1 lg:grid-cols-2 gap-0 p-5" }, [
-        _c(
-          "div",
-          {
-            staticClass:
-              "grid grid-cols-1 justify-items-center overflow-hidden h-auto",
-          },
-          [_c("img", { attrs: { src: _vm.bgImg, alt: "Login Bg" } })]
-        ),
+        _c("div", {
+          staticClass:
+            "grid grid-cols-1 justify-items-center overflow-hidden h-auto",
+        }),
         _vm._v(" "),
         _c(
           "div",
@@ -318,13 +313,13 @@ var render = function () {
                   [
                     _c("p", { staticClass: "text-blue-400 text-2xl mb-2" }, [
                       _vm._v(
-                        "\n                            Create Account,\n                        "
+                        "\n                        Create Account,\n                    "
                       ),
                     ]),
                     _vm._v(" "),
                     _c("p", { staticClass: "text-primary mt-2" }, [
                       _vm._v(
-                        "\n                            Fill in your Sweet as requested...\n                        "
+                        "\n                        Fill in your Sweet as requested...\n                    "
                       ),
                     ]),
                     _vm._v(" "),
@@ -353,7 +348,7 @@ var render = function () {
                                 [
                                   _c("ValidationProvider", {
                                     attrs: {
-                                      name: "Name",
+                                      name: "name",
                                       rules: "required|min:3",
                                     },
                                     scopedSlots: _vm._u(
@@ -422,7 +417,7 @@ var render = function () {
                                   _vm._v(" "),
                                   _c("ValidationProvider", {
                                     attrs: {
-                                      name: "Email",
+                                      name: "email",
                                       rules: "required|email",
                                     },
                                     scopedSlots: _vm._u(
@@ -449,7 +444,7 @@ var render = function () {
                                                     staticClass:
                                                       "input input-primary input-bordered mt-3",
                                                     attrs: {
-                                                      type: "text",
+                                                      type: "email",
                                                       placeholder: "email",
                                                     },
                                                     domProps: {
@@ -492,7 +487,7 @@ var render = function () {
                                   _vm._v(" "),
                                   _c("ValidationProvider", {
                                     attrs: {
-                                      name: "Password",
+                                      name: "password",
                                       rules: "required|min:6|max:12",
                                     },
                                     scopedSlots: _vm._u(
@@ -564,7 +559,7 @@ var render = function () {
                                   _c("ValidationProvider", {
                                     attrs: {
                                       name: "Confirm Password",
-                                      rules: "required|confirmed:Password",
+                                      rules: "required|confirmed:password",
                                     },
                                     scopedSlots: _vm._u(
                                       [
@@ -648,7 +643,7 @@ var render = function () {
                                       },
                                       [
                                         _vm._v(
-                                          "\n                                        Submit Details\n                                    "
+                                          "\n                                    Submit Details\n                                "
                                         ),
                                       ]
                                     ),

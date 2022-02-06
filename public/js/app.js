@@ -2247,14 +2247,13 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_3__["default"]({
 });
 router.beforeEach(function (to, from, next) {
   console.log("HELPER STATE", (0,_services_helper__WEBPACK_IMPORTED_MODULE_1__.isAuthentcated)());
-  var isAuthenticated = _store__WEBPACK_IMPORTED_MODULE_0__["default"].getters["auth/loggedIn"];
-  console.log("LOGGED IN", isAuthenticated);
-
-  if (!isAuthenticated && !to.meta["public"]) {
-    next("/login");
-  } else {
-    next();
-  }
+  next(); // var isAuthenticated = store.getters['auth/loggedIn'];
+  // console.log("LOGGED IN",isAuthenticated);
+  // if (!isAuthenticated && !to.meta.public) {
+  //     next("/login");
+  // } else {
+  //     next();
+  // }
 }); // function routeGuard(to, from, next) {
 //     var isAuthenticated = false;
 //     //this is just an example. You will have to find a better or
@@ -2304,9 +2303,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               return _authClient__WEBPACK_IMPORTED_MODULE_1__.authClient.get("/sanctum/csrf-cookie");
 
             case 2:
-              return _context.abrupt("return", _authClient__WEBPACK_IMPORTED_MODULE_1__.authClient.post("/login", payload));
+              _context.next = 4;
+              return _authClient__WEBPACK_IMPORTED_MODULE_1__.authClient.post("/login", payload);
 
-            case 3:
+            case 4:
+              return _context.abrupt("return", _context.sent);
+
+            case 5:
             case "end":
               return _context.stop();
           }
@@ -2424,6 +2427,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../router */ "./resources/js/router/index.js");
+
 
 
 var authClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
@@ -2436,7 +2441,21 @@ var authClient = axios__WEBPACK_IMPORTED_MODULE_0___default().create({
  */
 
 authClient.interceptors.response.use(function (response) {
-  console.log("INTERCEPT RES", response); //if(response.status==201) {store.dispatch("auth/setError", false);store.dispatch("auth/getAuthUser")}
+  console.log("INTERCEPT RES", response);
+
+  if (response.status == 201) {
+    _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setError", false); // store.dispatch("auth/getAuthUser");
+
+    _router__WEBPACK_IMPORTED_MODULE_2__["default"].push("/login");
+  } // if (response.status == 200) {
+  //     store.dispatch("auth/setError", {
+  //         message: "User Logged In",
+  //         errors: null,
+  //     });
+  //     // store.dispatch("auth/getAuthUser", "", { root: true });
+  //     //router.push("/");
+  // }
+
 
   return response;
 }, function (error) {
@@ -2448,7 +2467,7 @@ authClient.interceptors.response.use(function (response) {
     _store__WEBPACK_IMPORTED_MODULE_1__["default"].dispatch("auth/setMessages", error.response.data);
   }
 
-  return Promise.reject(error);
+  return Promise.reject(error.response.data); // return Promise.reject(error.response.data);
 });
 
 /***/ }),
@@ -2504,7 +2523,10 @@ var state = {
   user: null,
   loading: false,
   error: false,
-  messages: {}
+  messages: {
+    message: null,
+    errors: null
+  }
 };
 var mutations = {
   SET_USER: function SET_USER(state, user) {
@@ -2536,7 +2558,7 @@ var actions = {
       commit("SET_MESSAGE", error);
     });
   },
-  registerUser: function registerUser(_ref2, payload) {
+  loginUser: function loginUser(_ref2, payload) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee() {
       var commit, dispatch;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
@@ -2544,26 +2566,27 @@ var actions = {
           switch (_context.prev = _context.next) {
             case 0:
               commit = _ref2.commit, dispatch = _ref2.dispatch;
-              console.log("DISPATCHED register");
+              console.log("DISPATCHED Login User");
               commit("SET_LOADING", true);
-              return _context.abrupt("return", _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(payload).then(function (response) {
+              return _context.abrupt("return", _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].login(payload).then(function (response) {
                 console.log("DISP-RESP", response.data);
                 commit("SET_LOADING", false);
                 console.log("ST-USER", state);
                 commit("SET_ERROR", false);
                 commit("SET_MESSAGE", {
-                  "message": "User Registered Successfully"
+                  message: "User Logged In Successfully",
+                  errors: null
                 });
-                dispatch('getAuthuser');
-              })["catch"](function (error) {
-                console.log("ERROR", error);
+              })["catch"](function (err) {
+                console.log("ERROR", err);
                 commit("SET_LOADING", false);
                 commit("SET_USER", null); // commit("SET_USER_ROLES", null);
 
                 // commit("SET_USER_ROLES", null);
                 commit("SET_ERROR", 1);
                 commit("SET_MESSAGE", {
-                  "message": error
+                  message: err.message,
+                  errors: err.errors
                 });
               }));
 
@@ -2575,31 +2598,89 @@ var actions = {
       }, _callee);
     }))();
   },
-  getAuthUser: function getAuthUser(_ref3) {
-    var commit = _ref3.commit;
-    console.log("DISPATCHED getUser");
-    commit("SET_LOADING", true);
-    return _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].getAuthUser().then(function (response) {
-      console.log("DISP-getUSSER-RESP", response.data);
-      commit("SET_USER", response.data);
-      commit("SET_LOADING", false);
-      console.log("ST-USER", state);
-    })["catch"](function (error) {
-      console.log("ERROR", error);
-      commit("SET_LOADING", false);
-      commit("SET_USER", null); // commit("SET_USER_ROLES", null);
+  registerUser: function registerUser(_ref3, payload) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee2() {
+      var commit, dispatch;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee2$(_context2) {
+        while (1) {
+          switch (_context2.prev = _context2.next) {
+            case 0:
+              commit = _ref3.commit, dispatch = _ref3.dispatch;
+              console.log("DISPATCHED register");
+              commit("SET_LOADING", true);
+              return _context2.abrupt("return", _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].registerUser(payload).then(function (response) {
+                console.log("DISP-RESP", response.data);
+                commit("SET_LOADING", false);
+                console.log("ST-USER", state);
+                commit("SET_ERROR", false);
+                commit("SET_MESSAGE", {
+                  message: "User Registered Successfully",
+                  errors: null
+                }); // dispatch("getAuthUser", "", { root: false });
+              })["catch"](function (err) {
+                console.log("ERROR", err);
+                commit("SET_LOADING", false);
+                commit("SET_USER", null); // commit("SET_USER_ROLES", null);
 
-      commit("SET_ERROR", 1);
-      commit("SET_MESSAGE", error);
-    });
+                // commit("SET_USER_ROLES", null);
+                commit("SET_ERROR", 1);
+                commit("SET_MESSAGE", {
+                  message: err.message,
+                  errors: err.errors
+                });
+              }));
+
+            case 4:
+            case "end":
+              return _context2.stop();
+          }
+        }
+      }, _callee2);
+    }))();
   },
-  setMessages: function setMessages(_ref4, payload) {
-    var commit = _ref4.commit;
+  getAuthUser: function getAuthUser(_ref4) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee3() {
+      var commit;
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee3$(_context3) {
+        while (1) {
+          switch (_context3.prev = _context3.next) {
+            case 0:
+              commit = _ref4.commit;
+              console.log("DISPATCHED getUser");
+              commit("SET_LOADING", true);
+              return _context3.abrupt("return", _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].getAuthUser().then(function (response) {
+                console.log("DISP-getUSSER-RESP", response.data);
+                commit("SET_USER", response.data);
+                commit("SET_LOADING", false);
+                console.log("ST-USER", state);
+              })["catch"](function (err) {
+                console.log("ERROR", err.errors);
+                commit("SET_LOADING", false);
+                commit("SET_USER", null); // commit("SET_USER_ROLES", null);
+
+                // commit("SET_USER_ROLES", null);
+                commit("SET_ERROR", 1);
+                commit("SET_MESSAGE", {
+                  message: err.message,
+                  errors: err.errors
+                });
+              }));
+
+            case 4:
+            case "end":
+              return _context3.stop();
+          }
+        }
+      }, _callee3);
+    }))();
+  },
+  setMessages: function setMessages(_ref5, payload) {
+    var commit = _ref5.commit;
     console.log("BAYLOAD", payload);
     commit("SET_MESSAGE", payload);
   },
-  setError: function setError(_ref5, payload) {
-    var commit = _ref5.commit;
+  setError: function setError(_ref6, payload) {
+    var commit = _ref6.commit;
     commit("SET_ERROR", payload);
   }
 };

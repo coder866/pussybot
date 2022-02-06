@@ -3,7 +3,7 @@ import { authClient } from "./authClient";
 export default {
     async login(payload) {
         await authClient.get("/sanctum/csrf-cookie");
-        return authClient.post("/login", payload);
+        return await authClient.post("/login", payload);
     },
 
     logout() {

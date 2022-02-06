@@ -6,7 +6,7 @@
             <div
                 class="grid grid-cols-1 justify-items-center overflow-hidden h-auto"
             >
-                <img :src="bgImg" alt="Login Bg" />
+                <!--                <img :src="bgImg" alt="Login Bg" />-->
             </div>
             <div class="grid grid-cols-1 justify-items-center w-auto md:w-full">
                 <div class="grid overflow-hidden bg-white h-auto w-full p-3">
@@ -27,7 +27,7 @@
                             >
                                 <ValidationProvider
                                     v-slot="{ errors }"
-                                    name="Name"
+                                    name="name"
                                     rules="required|min:3"
                                 >
                                     <div class="form-control">
@@ -44,12 +44,12 @@
                                 </ValidationProvider>
                                 <ValidationProvider
                                     v-slot="{ errors }"
-                                    name="Email"
+                                    name="email"
                                     rules="required|email"
                                 >
                                     <div class="form-control">
                                         <input
-                                            type="text"
+                                            type="email"
                                             placeholder="email"
                                             class="input input-primary input-bordered mt-3"
                                             v-model="user.email"
@@ -61,7 +61,7 @@
                                 </ValidationProvider>
                                 <ValidationProvider
                                     v-slot="{ errors }"
-                                    name="Password"
+                                    name="password"
                                     rules="required|min:6|max:12"
                                 >
                                     <div class="form-control">
@@ -75,15 +75,13 @@
                                         <small class="text-error">{{
                                             errors[0]
                                         }}</small>
-
-
                                     </div>
                                 </ValidationProvider>
 
                                 <ValidationProvider
                                     v-slot="{ errors }"
                                     name="Confirm Password"
-                                    rules="required|confirmed:Password"
+                                    rules="required|confirmed:password"
                                 >
                                     <div class="form-control">
                                         <input
@@ -110,7 +108,7 @@
                         </ValidationObserver>
                     </div>
                     <div class="text-error">
-<!--                        {{error.message}}-->
+                        <!--                        {{error.message}}-->
                     </div>
                 </div>
             </div>
@@ -133,32 +131,43 @@ export default {
                 password: "",
                 password_confirmation: "",
             },
-            error:null,
-            errorMsg:{},
+            error: null,
+            errorMsg: {},
         };
     },
-    mounted(){
-        console.log("MOUNTED",this.$store.getters['auth/loggedIn']);
+    mounted() {
+        console.log("MOUNTED", this.$store.getters["auth/loggedIn"]);
     },
     methods: {
         registerUser() {
             this.$refs.registrationValidation.validate().then((success) => {
                 if (success) {
-                    this.$store.dispatch("auth/registerUser", this.user).then(()=>{
-                        if(this.$store.getters['auth/error']){
-                            this.error=this.$store.getters['auth/getMessages'];
-                            this.errorMsg={
-                                Email:this.error.message.errors.hasOwnProperty('email')?this.error.message.errors.email:[],
-                                Password:this.error.message.errors.hasOwnProperty('password')?this.error.message.errors.password:[],
+                    this.$store
+                        .dispatch("auth/registerUser", this.user)
+                        .then(() => {
+                            if (this.$store.getters["auth/error"]) {
+                                this.error =
+                                    this.$store.getters["auth/getMessages"];
+
+                                const keys = Object.keys(this.error.errors);
+                                this.errorMsg = {};
+                                keys.forEach((key, index) => {
+                                    this.errorMsg[key] = this.error.errors[key];
+                                });
+
+                                this.$refs.registrationValidation.setErrors(
+                                    this.errorMsg
+                                );
                             }
-                                this.$refs.registrationValidation.setErrors(this.errorMsg);
-                        }
-                       // store.dispatch("auth/getAuthUser");
+                            // store.dispatch("auth/getAuthUser");
 
-                        this.$swal("",this.$store.getters['auth/getMessages'].message,"error");
-                       // this.$router.push('/');
-                    });
-
+                            this.$swal(
+                                "",
+                                this.$store.getters["auth/getMessages"].message,
+                                this.error ? "error" : "success"
+                            );
+                            // this.$router.push('/');
+                        });
                 }
             });
         },

@@ -50,6 +50,6 @@ class AuthController extends Controller
     // }
     public function getAuthUser()
     {
-        return $this->success("",Auth::User());
+        return $this->success("Successfully Authenticated",Auth::User());
     }
 }

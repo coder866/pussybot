@@ -24,15 +24,16 @@
                             <form @submit.prevent="login">
                                 <ValidationProvider
                                     v-slot="{ errors }"
-                                    name="Email"
+                                    name="email"
                                     rules="required|email"
                                 >
                                     <div class="form-control">
                                         <input
-                                            type="text"
-                                            placeholder="username"
+                                            type="email"
+                                            name="email"
+                                            placeholder="Username/Email"
                                             class="input input-primary input-bordered mt-2 w-full"
-                                            v-model="user.username"
+                                            v-model="user.email"
                                         />
                                         <small class="text-error">{{
                                             errors[0]
@@ -41,7 +42,7 @@
                                 </ValidationProvider>
                                 <ValidationProvider
                                     v-slot="{ errors }"
-                                    name="Password"
+                                    name="password"
                                     rules="required|min:6|max:12"
                                 >
                                     <div class="form-control">
@@ -93,7 +94,7 @@ export default {
         return {
             bgImg: logincat,
             user: {
-                username: "",
+                email: "",
                 password: "",
             },
         };
@@ -102,18 +103,31 @@ export default {
         login() {
             this.$refs.loginValidation.validate().then((success) => {
                 if (success) {
-                    authService
-                        .login(this.user)
-                        .then((response) => {
-                            console.log("response=", response);
-                        })
-                        .catch((error) => {
-                            console.log("error", error);
+                    this.$store
+                        .dispatch("auth/loginUser", this.user)
+                        .then(() => {
+                            if (this.$store.getters["auth/error"]) {
+                                this.error =
+                                    this.$store.getters["auth/getMessages"];
+
+                                const keys = Object.keys(this.error.errors);
+                                this.errorMsg = {};
+                                keys.forEach((key, index) => {
+                                    this.errorMsg[key] = this.error.errors[key];
+                                });
+
+                                this.$refs.loginValidation.setErrors(
+                                    this.errorMsg
+                                );
+                            }
+                            // store.dispatch("auth/getAuthUser");
+
                             this.$swal(
-                                "error",
-                                this.$store.getters["auth/messages"],
-                                "error"
+                                "",
+                                this.$store.getters["auth/getMessages"].message,
+                                this.error ? "error" : "success"
                             );
+                            // this.$router.push('/');
                         });
                 }
             });

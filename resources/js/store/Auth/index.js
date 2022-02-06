@@ -6,7 +6,10 @@ export const state = {
     user: null,
     loading: false,
     error: false,
-    messages: {},
+    messages: {
+        message: null,
+        errors: null,
+    },
 };
 export const mutations = {
     SET_USER(state, user) {
@@ -38,7 +41,34 @@ export const actions = {
                 commit("SET_MESSAGE", error);
             });
     },
-    async registerUser({ commit,dispatch }, payload) {
+    async loginUser({ commit, dispatch }, payload) {
+        console.log("DISPATCHED Login User");
+        commit("SET_LOADING", true);
+        return authService
+            .login(payload)
+            .then((response) => {
+                console.log("DISP-RESP", response.data);
+                commit("SET_LOADING", false);
+                console.log("ST-USER", state);
+                commit("SET_ERROR", false);
+                commit("SET_MESSAGE", {
+                    message: "User Logged In Successfully",
+                    errors: null,
+                });
+            })
+            .catch((err) => {
+                console.log("ERROR", err);
+                commit("SET_LOADING", false);
+                commit("SET_USER", null);
+                // commit("SET_USER_ROLES", null);
+                commit("SET_ERROR", 1);
+                commit("SET_MESSAGE", {
+                    message: err.message,
+                    errors: err.errors,
+                });
+            });
+    },
+    async registerUser({ commit, dispatch }, payload) {
         console.log("DISPATCHED register");
         commit("SET_LOADING", true);
         return authService
@@ -48,19 +78,25 @@ export const actions = {
                 commit("SET_LOADING", false);
                 console.log("ST-USER", state);
                 commit("SET_ERROR", false);
-                commit("SET_MESSAGE", {"message":"User Registered Successfully"});
-                dispatch('getAuthuser');
+                commit("SET_MESSAGE", {
+                    message: "User Registered Successfully",
+                    errors: null,
+                });
+                // dispatch("getAuthUser", "", { root: false });
             })
-            .catch((error) => {
-                console.log("ERROR", error);
+            .catch((err) => {
+                console.log("ERROR", err);
                 commit("SET_LOADING", false);
                 commit("SET_USER", null);
                 // commit("SET_USER_ROLES", null);
                 commit("SET_ERROR", 1);
-                commit("SET_MESSAGE", {"message":error});
+                commit("SET_MESSAGE", {
+                    message: err.message,
+                    errors: err.errors,
+                });
             });
     },
-    getAuthUser({ commit}) {
+    async getAuthUser({ commit }) {
         console.log("DISPATCHED getUser");
         commit("SET_LOADING", true);
         return authService
@@ -71,13 +107,16 @@ export const actions = {
                 commit("SET_LOADING", false);
                 console.log("ST-USER", state);
             })
-            .catch((error) => {
-                console.log("ERROR", error);
+            .catch((err) => {
+                console.log("ERROR", err.errors);
                 commit("SET_LOADING", false);
                 commit("SET_USER", null);
                 // commit("SET_USER_ROLES", null);
                 commit("SET_ERROR", 1);
-                commit("SET_MESSAGE", error);
+                commit("SET_MESSAGE", {
+                    message: err.message,
+                    errors: err.errors,
+                });
             });
     },
     setMessages({ commit }, payload) {

@@ -99,6 +99,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -107,7 +108,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       bgImg: _assets_img_logincat_jpeg__WEBPACK_IMPORTED_MODULE_0__["default"],
       user: {
-        username: "",
+        email: "",
         password: ""
       }
     };
@@ -118,12 +119,21 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$refs.loginValidation.validate().then(function (success) {
         if (success) {
-          _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].login(_this.user).then(function (response) {
-            console.log("response=", response);
-          })["catch"](function (error) {
-            console.log("error", error);
+          _this.$store.dispatch("auth/loginUser", _this.user).then(function () {
+            if (_this.$store.getters["auth/error"]) {
+              _this.error = _this.$store.getters["auth/getMessages"];
+              var keys = Object.keys(_this.error.errors);
+              _this.errorMsg = {};
+              keys.forEach(function (key, index) {
+                _this.errorMsg[key] = _this.error.errors[key];
+              });
 
-            _this.$swal("error", _this.$store.getters["auth/messages"], "error");
+              _this.$refs.loginValidation.setErrors(_this.errorMsg);
+            } // store.dispatch("auth/getAuthUser");
+
+
+            _this.$swal("", _this.$store.getters["auth/getMessages"].message, _this.error ? "error" : "success"); // this.$router.push('/');
+
           });
         }
       });
@@ -283,7 +293,7 @@ var render = function () {
                                 [
                                   _c("ValidationProvider", {
                                     attrs: {
-                                      name: "Email",
+                                      name: "email",
                                       rules: "required|email",
                                     },
                                     scopedSlots: _vm._u(
@@ -302,20 +312,21 @@ var render = function () {
                                                       {
                                                         name: "model",
                                                         rawName: "v-model",
-                                                        value:
-                                                          _vm.user.username,
+                                                        value: _vm.user.email,
                                                         expression:
-                                                          "user.username",
+                                                          "user.email",
                                                       },
                                                     ],
                                                     staticClass:
                                                       "input input-primary input-bordered mt-2 w-full",
                                                     attrs: {
-                                                      type: "text",
-                                                      placeholder: "username",
+                                                      type: "email",
+                                                      name: "email",
+                                                      placeholder:
+                                                        "Username/Email",
                                                     },
                                                     domProps: {
-                                                      value: _vm.user.username,
+                                                      value: _vm.user.email,
                                                     },
                                                     on: {
                                                       input: function ($event) {
@@ -327,7 +338,7 @@ var render = function () {
                                                         }
                                                         _vm.$set(
                                                           _vm.user,
-                                                          "username",
+                                                          "email",
                                                           $event.target.value
                                                         )
                                                       },
@@ -354,7 +365,7 @@ var render = function () {
                                   _vm._v(" "),
                                   _c("ValidationProvider", {
                                     attrs: {
-                                      name: "Password",
+                                      name: "password",
                                       rules: "required|min:6|max:12",
                                     },
                                     scopedSlots: _vm._u(

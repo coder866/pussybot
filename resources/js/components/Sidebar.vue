@@ -26,7 +26,76 @@
                     <notification-dropdown-component></notification-dropdown-component>
                 </li>
                 <li class="inline-block relative">
-                    <user-dropdown-component></user-dropdown-component>
+                    <!--                    <user-dropdown-component></user-dropdown-component>-->
+                    <ul
+                        class="menu w-64 p-3 border bg-base-100 rounded-box text-white"
+                    >
+                        <li class="menu-title">
+                            <span class="text-white text-2xl">
+                                Menu Title
+                            </span>
+                        </li>
+                        <li>
+                            <a>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    class="inline-block w-5 h-5 mr-2 stroke-current"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                                    ></path>
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                                    ></path>
+                                </svg>
+                                Item with icon
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    class="inline-block w-5 h-5 mr-2 stroke-current"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+                                    ></path>
+                                </svg>
+                                Item with icon
+                            </a>
+                        </li>
+                        <li>
+                            <a>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    class="inline-block w-5 h-5 mr-2 stroke-current"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"
+                                    ></path>
+                                </svg>
+                                Item with icon
+                            </a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
             <!-- Collapse -->
@@ -79,13 +148,20 @@
                         >
                     </li>
                     <li class="items-center">
-                        <a
+                        <!--                        <a-->
+                        <!--                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"-->
+                        <!--                            href="#/landing"-->
+                        <!--                        >-->
+                        <!--                            Landing Page</a-->
+                        <!--                        >-->
+                        <router-link
+                            to="/tagslist"
                             class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                            href="#/landing"
-                            ><i
+                        >
+                            <i
                                 class="fas fa-newspaper text-blueGray-400 mr-2 text-sm"
                             ></i>
-                            Landing Page</a
+                            Hashtags List</router-link
                         >
                     </li>
                     <li class="items-center">

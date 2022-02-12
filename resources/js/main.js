@@ -10,7 +10,9 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 import { ValidationProvider } from "vee-validate/dist/vee-validate.full";
 import { ValidationObserver } from "vee-validate";
+import moment from "moment";
 
+Vue.prototype.moment = moment;
 Vue.component("ValidationProvider", ValidationProvider);
 Vue.component("ValidationObserver", ValidationObserver);
 Vue.use(VueSweetalert2);

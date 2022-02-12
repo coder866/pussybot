@@ -24,13 +24,13 @@ use App\Http\Controllers\ApplicationController;
 Route::get('/{any}', [ApplicationController::class,'__invoke'])->where('any', '.*');
 
 // Route::get('/', function () {
-    
-// return view('welcome');
+//    return \Illuminate\Support\Facades\Hash::make('#123456');
+//
 // });
 
 // Route::get('/tweetMedia', function()
 // {
-    
+
 // $uploaded_media = Twitter::forApiV1()->uploadMedia(['media' => File::get(public_path('media/pussyBot.png'))]);
 // //dd($uploaded_media);
 // return Twitter::forApiV1()->postTweet(['status' => 'Happy New Year', 'media_ids' =>
@@ -68,11 +68,11 @@ Route::get('/{any}', [ApplicationController::class,'__invoke'])->where('any', '.
 // dd(Purr::getWorldwideTrending());
 // });
 // Route::get('/woeidt',function(){
-    
+
 // dd(Purr::getTrendingByWoeid(1528488));
 // });
 // Route::get('/random',function(){
-    
+
 // return Purr::getTrendingRandom();
 // });
 // Route::get('/getText',function(){
@@ -84,7 +84,7 @@ Route::get('/{any}', [ApplicationController::class,'__invoke'])->where('any', '.
 // dd(Botlang::getRandomKeyword());
 // });
 // Route::get('/getImage',function(){
-    
+
 // $image=Image::load('https://cdn2.thecatapi.com/images/8x4MlAzwH.png');
 // $image->save(public_path('media/catx.png'));
 // return 'saved';

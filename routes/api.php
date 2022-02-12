@@ -16,6 +16,7 @@ use App\Http\Controllers\AuthController;
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/user/auth', [AuthController::class, 'getAuthUser']);
+ Route::resource('create-hashtag',HashTagsController::class);
+ Route::get('/get-user-tags/{id}',[HashTagsController::class,'getUserTags']);
 });
 
- Route::resource('create-hashtag',HashTagsController::class);

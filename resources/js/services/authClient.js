@@ -13,19 +13,20 @@ export const authClient = axios.create({
 authClient.interceptors.response.use(
     (response) => {
         console.log("INTERCEPT RES", response);
+
         if (response.status == 201) {
             store.dispatch("auth/setError", false);
             // store.dispatch("auth/getAuthUser");
             router.push("/login");
         }
-        // if (response.status == 200) {
-        //     store.dispatch("auth/setError", {
-        //         message: "User Logged In",
-        //         errors: null,
-        //     });
-        //     // store.dispatch("auth/getAuthUser", "", { root: true });
-        //     //router.push("/");
-        // }
+        if (response.status == 200) {
+            // store.dispatch("auth/setError", {
+            //     message: "User Logged In",
+            //     errors: null,
+            // });
+            // store.dispatch("auth/getAuthUser", "", { root: true });
+            //router.push("/");
+        }
 
         return response;
     },

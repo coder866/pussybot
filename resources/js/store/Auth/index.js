@@ -3,7 +3,11 @@ import router from "../../router";
 export const namespaced = true;
 
 export const state = {
-    user: null,
+    user: {
+        data: {},
+        message: null,
+        success: false,
+    },
     loading: false,
     error: false,
     messages: {
@@ -47,25 +51,25 @@ export const actions = {
         return authService
             .login(payload)
             .then((response) => {
-                console.log("DISP-RESP", response.data);
-                commit("SET_LOADING", false);
-                console.log("ST-USER", state);
-                commit("SET_ERROR", false);
-                commit("SET_MESSAGE", {
-                    message: "User Logged In Successfully",
-                    errors: null,
-                });
+                console.log("LOGIN-RESP", response);
+                // commit("SET_LOADING", false);
+                // console.log("ST-USER", state);
+                // commit("SET_ERROR", false);
+                // commit("SET_MESSAGE", {
+                //     message: "User Logged In Successfully",
+                //     errors: null,
+                // });
             })
             .catch((err) => {
                 console.log("ERROR", err);
-                commit("SET_LOADING", false);
-                commit("SET_USER", null);
-                // commit("SET_USER_ROLES", null);
-                commit("SET_ERROR", 1);
-                commit("SET_MESSAGE", {
-                    message: err.message,
-                    errors: err.errors,
-                });
+                // commit("SET_LOADING", false);
+                // commit("SET_USER", null);
+                // // commit("SET_USER_ROLES", null);
+                // commit("SET_ERROR", 1);
+                // commit("SET_MESSAGE", {
+                //     message: err.message,
+                //     errors: err.errors,
+                // });
             });
     },
     async registerUser({ commit, dispatch }, payload) {
@@ -96,27 +100,27 @@ export const actions = {
                 });
             });
     },
-    async getAuthUser({ commit }) {
+    getAuthUser({ commit }) {
         console.log("DISPATCHED getUser");
         commit("SET_LOADING", true);
         return authService
             .getAuthUser()
             .then((response) => {
-                console.log("DISP-getUSSER-RESP", response.data);
-                commit("SET_USER", response.data);
-                commit("SET_LOADING", false);
-                console.log("ST-USER", state);
+                console.log("DISP-getUSSER-RESP", response);
+                // commit("SET_USER", response.data);
+                // commit("SET_LOADING", false);
+                // console.log("ST-USER", state);
             })
             .catch((err) => {
-                console.log("ERROR", err.errors);
-                commit("SET_LOADING", false);
-                commit("SET_USER", null);
-                // commit("SET_USER_ROLES", null);
-                commit("SET_ERROR", 1);
-                commit("SET_MESSAGE", {
-                    message: err.message,
-                    errors: err.errors,
-                });
+                console.log("ERROR-get-USER-ERRR", err);
+                // commit("SET_LOADING", false);
+                // commit("SET_USER", null);
+                // // commit("SET_USER_ROLES", null);
+                // commit("SET_ERROR", 1);
+                // commit("SET_MESSAGE", {
+                //     message: err.message,
+                //     errors: err.errors,
+                // });
             });
     },
     setMessages({ commit }, payload) {
@@ -126,11 +130,14 @@ export const actions = {
     setError({ commit }, payload) {
         commit("SET_ERROR", payload);
     },
+    setUserInfo({ commit }, payload) {
+        commit("SET_USER", payload);
+    },
 };
 export const getters = {
     authUser: (state) => {
         console.log("AUTHUSER==STATE==", state.user);
-        return state.user;
+        return state.user.data;
     },
     authUserRoles: (state) => {
         return state.roles;
@@ -146,7 +153,7 @@ export const getters = {
     },
     loggedIn: (state) => {
         console.log("LOGGEDIN GETTER", state);
-        return !!state.user;
+        return !!state.user.success;
     },
     getMessages: (state) => {
         console.log("MEEEEESAGEEE", state.messages);

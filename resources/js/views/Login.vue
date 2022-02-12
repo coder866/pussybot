@@ -88,6 +88,8 @@
 <script>
 import logincat from "../assets/img/logincat.jpeg";
 import authService from "../services/Authservice";
+import store from "../store";
+import { mapState } from "vuex";
 export default {
     components: {},
     data() {
@@ -97,37 +99,47 @@ export default {
                 email: "",
                 password: "",
             },
+            errMsg: {},
         };
     },
     methods: {
         login() {
             this.$refs.loginValidation.validate().then((success) => {
                 if (success) {
-                    this.$store
-                        .dispatch("auth/loginUser", this.user)
-                        .then(() => {
-                            if (this.$store.getters["auth/error"]) {
-                                this.error =
-                                    this.$store.getters["auth/getMessages"];
-
-                                const keys = Object.keys(this.error.errors);
-                                this.errorMsg = {};
-                                keys.forEach((key, index) => {
-                                    this.errorMsg[key] = this.error.errors[key];
-                                });
-
-                                this.$refs.loginValidation.setErrors(
-                                    this.errorMsg
-                                );
-                            }
-                            // store.dispatch("auth/getAuthUser");
-
-                            this.$swal(
-                                "",
-                                this.$store.getters["auth/getMessages"].message,
-                                this.error ? "error" : "success"
+                    console.log("Login Hittt");
+                    authService
+                        .login(this.user)
+                        .then((response) => {
+                            this.$store.dispatch(
+                                "auth/setUserInfo",
+                                response.data
                             );
-                            // this.$router.push('/');
+                            this.$store.dispatch("tags/getUserTags");
+                            this.$router
+                                .push({
+                                    name: "dashboard",
+                                })
+                                .catch((error) => {
+                                    if (
+                                        error.name !== "NavigationDuplicated" &&
+                                        !error.message.includes(
+                                            "Avoided redundant navigation to current location"
+                                        )
+                                    ) {
+                                        console.log(error);
+                                    }
+                                });
+                        })
+                        .catch((error) => {
+                            /*map the errors to vee-validate*/
+                            const keys = Object.keys(error.errors);
+                            this.errorMsg = {};
+                            keys.forEach((key, index) => {
+                                this.errorMsg[key] = error.errors[key];
+                            });
+
+                            this.$refs.loginValidation.setErrors(this.errorMsg);
+                            console.log("Something went worong", error);
                         });
                 }
             });

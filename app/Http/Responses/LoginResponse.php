@@ -3,6 +3,7 @@
 namespace App\Http\Responses;
 
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
+use App\Http\Traits\HttpResponseTrait;
 
 class LoginResponse implements LoginResponseContract
 {
@@ -10,10 +11,11 @@ class LoginResponse implements LoginResponseContract
      * @param  $request
      * @return mixed
      */
-    public function toResponse($request)
-    {
-        $home = '/';
 
-        return redirect()->intended($home);
+    use HttpResponseTrait;
+
+    public function toResponse($request): \Illuminate\Http\JsonResponse
+    {
+        return $this->success("Logged In Successfully",Auth()->user());
     }
 }

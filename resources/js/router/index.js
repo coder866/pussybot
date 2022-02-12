@@ -12,6 +12,7 @@ const routes = [
         component: () => import("../views/Dashboard.vue"),
         meta: {
             requiresAuth: true,
+            public: false,
         },
         //beforeEnter: routeGuard,
     },
@@ -34,6 +35,35 @@ const routes = [
         },
     },
     {
+        path: "/create-hashtag",
+        name: "create-hashtag",
+        component: () => import("../views/Hashtags/CreateTag.vue"),
+        meta: {
+            redirectAfterAuth: true,
+            public: true,
+        },
+    },
+
+    {
+        path: "/tagslist/edit/:id",
+        name: "edit-tag",
+        component: () => import("../views/Hashtags/EditTag.vue"),
+        props: true,
+        meta: {
+            redirectAfterAuth: true,
+            public: true,
+        },
+    },
+    {
+        path: "/tagslist",
+        name: "hash-tags",
+        component: () => import("../views/Hashtags/TagList.vue"),
+        meta: {
+            redirectAfterAuth: true,
+            public: true,
+        },
+    },
+    {
         path: "/not-found",
         name: "error-404",
         component: () => import("../views/NotFound.vue"),
@@ -50,16 +80,29 @@ const router = new VueRouter({
     routes,
 });
 
-router.beforeEach((to, from, next) => {
-    console.log("HELPER STATE", isAuthentcated());
+// router.beforeEach((to, from, next) => {
+//     console.log("HELPER STATE", isAuthentcated());
+//
+//     var isAuthenticated = isAuthentcated();
+//     console.log("LOGGED IN", isAuthenticated);
+//     if (!isAuthenticated && !to.meta.public) {
+//         next("/login");
+//     } else {
+//         next();
+//     }
+// });
+router.beforeEach(async (to, from, next) => {
+    await store.restored;
+    // redirect to login page if not logged in and trying to access a restricted page
+    const publicPages = ["/login", "/register"];
+    const authRequired = !publicPages.includes(to.path);
+    console.log("isAuthentcated", isAuthentcated());
+    const isAuthenticated = isAuthentcated();
+
+    if (authRequired && !isAuthenticated) {
+        return next("/login");
+    }
     next();
-    // var isAuthenticated = store.getters['auth/loggedIn'];
-    // console.log("LOGGED IN",isAuthenticated);
-    // if (!isAuthenticated && !to.meta.public) {
-    //     next("/login");
-    // } else {
-    //     next();
-    // }
 });
 
 // function routeGuard(to, from, next) {

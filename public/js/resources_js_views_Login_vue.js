@@ -13,6 +13,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _assets_img_logincat_jpeg__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../assets/img/logincat.jpeg */ "./resources/js/assets/img/logincat.jpeg");
 /* harmony import */ var _services_Authservice__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../services/Authservice */ "./resources/js/services/Authservice.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../store */ "./resources/js/store/index.js");
 //
 //
 //
@@ -100,6 +101,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -110,7 +113,8 @@ __webpack_require__.r(__webpack_exports__);
       user: {
         email: "",
         password: ""
-      }
+      },
+      errMsg: {}
     };
   },
   methods: {
@@ -119,21 +123,30 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$refs.loginValidation.validate().then(function (success) {
         if (success) {
-          _this.$store.dispatch("auth/loginUser", _this.user).then(function () {
-            if (_this.$store.getters["auth/error"]) {
-              _this.error = _this.$store.getters["auth/getMessages"];
-              var keys = Object.keys(_this.error.errors);
-              _this.errorMsg = {};
-              keys.forEach(function (key, index) {
-                _this.errorMsg[key] = _this.error.errors[key];
-              });
+          console.log("Login Hittt");
+          _services_Authservice__WEBPACK_IMPORTED_MODULE_1__["default"].login(_this.user).then(function (response) {
+            _this.$store.dispatch("auth/setUserInfo", response.data);
 
-              _this.$refs.loginValidation.setErrors(_this.errorMsg);
-            } // store.dispatch("auth/getAuthUser");
+            _this.$store.dispatch("tags/getUserTags");
 
+            _this.$router.push({
+              name: "dashboard"
+            })["catch"](function (error) {
+              if (error.name !== "NavigationDuplicated" && !error.message.includes("Avoided redundant navigation to current location")) {
+                console.log(error);
+              }
+            });
+          })["catch"](function (error) {
+            /*map the errors to vee-validate*/
+            var keys = Object.keys(error.errors);
+            _this.errorMsg = {};
+            keys.forEach(function (key, index) {
+              _this.errorMsg[key] = error.errors[key];
+            });
 
-            _this.$swal("", _this.$store.getters["auth/getMessages"].message, _this.error ? "error" : "success"); // this.$router.push('/');
+            _this.$refs.loginValidation.setErrors(_this.errorMsg);
 
+            console.log("Something went worong", error);
           });
         }
       });

@@ -37,8 +37,9 @@ export const actions = {
         return authService
             .logout()
             .then(() => {
-                commit("SET_USER", null);
-                router.push({ name: "login" });
+                commit("SET_USER", { data: {}, message: null, success: false });
+                sessionStorage.clear();
+                location.reload();
             })
             .catch((error) => {
                 commit("SET_ERROR", true);

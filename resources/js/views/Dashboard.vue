@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1 class="text-blue-500 text-2xl">DashBoard</h1>
         <!--        <sidebar-component></sidebar-component>-->
 
         <!--        <div class="relative md:ml-64 bg-blueGray-100">-->

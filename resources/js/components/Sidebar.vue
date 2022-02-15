@@ -140,20 +140,25 @@
                 <!-- Navigation -->
                 <ul class="md:flex-col md:min-w-full flex flex-col list-none">
                     <li class="items-center">
-                        <a
+                        <router-link
                             class="text-pink-500 hover:text-pink-600 text-xs uppercase py-3 font-bold block"
-                            href="#/dashboard"
+                            to="/"
                             ><i class="fas fa-tv opacity-75 mr-2 text-sm"></i>
-                            Dashboard</a
+                            Dashboard</router-link
                         >
                     </li>
                     <li class="items-center">
-                        <!--                        <a-->
-                        <!--                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"-->
-                        <!--                            href="#/landing"-->
-                        <!--                        >-->
-                        <!--                            Landing Page</a-->
-                        <!--                        >-->
+                        <router-link
+                            to="/create-hashtag"
+                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
+                        >
+                            <i
+                                class="fas fa-newspaper text-blueGray-400 mr-2 text-sm"
+                            ></i>
+                            Create New HashTag</router-link
+                        >
+                    </li>
+                    <li class="items-center">
                         <router-link
                             to="/tagslist"
                             class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
@@ -162,119 +167,6 @@
                                 class="fas fa-newspaper text-blueGray-400 mr-2 text-sm"
                             ></i>
                             Hashtags List</router-link
-                        >
-                    </li>
-                    <li class="items-center">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                            href="#/profile"
-                            ><i
-                                class="fas fa-user-circle text-blueGray-400 mr-2 text-sm"
-                            ></i>
-                            Profile Page</a
-                        >
-                    </li>
-                    <li class="items-center">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-xs uppercase py-3 font-bold block"
-                            href="#/login"
-                            ><i
-                                class="fas fa-fingerprint text-blueGray-400 mr-2 text-sm"
-                            ></i>
-                            Login</a
-                        >
-                    </li>
-                    <li class="items-center">
-                        <a
-                            class="text-blueGray-300 text-xs uppercase py-3 font-bold block"
-                            href="#pablo"
-                            ><i
-                                class="fas fa-clipboard-list text-blueGray-300 mr-2 text-sm"
-                            ></i>
-                            Register (soon)</a
-                        >
-                    </li>
-                    <li class="items-center">
-                        <a
-                            class="text-blueGray-300 text-xs uppercase py-3 font-bold block"
-                            href="#pablo"
-                            ><i
-                                class="fas fa-tools text-blueGray-300 mr-2 text-sm"
-                            ></i>
-                            Settings (soon)</a
-                        >
-                    </li>
-                </ul>
-                <!-- Divider -->
-                <hr class="my-4 md:min-w-full" />
-                <!-- Heading -->
-                <h6
-                    class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pb-4 no-underline"
-                >
-                    Documentation
-                </h6>
-                <!-- Navigation -->
-                <ul
-                    class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4"
-                >
-                    <li class="inline-flex">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-                            href="#/documentation/styles"
-                            ><i
-                                class="fas fa-paint-brush mr-2 text-blueGray-400 text-base"
-                            ></i>
-                            Styles</a
-                        >
-                    </li>
-                    <li class="inline-flex">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-                            href="#/documentation/alerts"
-                            ><i
-                                class="fab fa-css3-alt mr-2 text-blueGray-400 text-base"
-                            ></i>
-                            CSS Components</a
-                        >
-                    </li>
-                    <li class="inline-flex">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-                            href="#/documentation/vue/alerts"
-                            ><i
-                                class="fab fa-vuejs mr-2 text-blueGray-400 text-base"
-                            ></i>
-                            VueJS</a
-                        >
-                    </li>
-                    <li class="inline-flex">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-                            href="#/documentation/react/alerts"
-                            ><i
-                                class="fab fa-react mr-2 text-blueGray-400 text-base"
-                            ></i>
-                            React</a
-                        >
-                    </li>
-                    <li class="inline-flex">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-                            href="#/documentation/angular/alerts"
-                            ><i
-                                class="fab fa-angular mr-2 text-blueGray-400 text-base"
-                            ></i>
-                            Angular</a
-                        >
-                    </li>
-                    <li class="inline-flex">
-                        <a
-                            class="text-blueGray-700 hover:text-blueGray-500 text-sm block mb-4 no-underline font-semibold"
-                            href="#/documentation/javascript/alerts"
-                            ><i
-                                class="fab fa-js-square mr-2 text-blueGray-400 text-base"
-                            ></i>
-                            Javascript</a
                         >
                     </li>
                 </ul>

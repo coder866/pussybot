@@ -66,14 +66,31 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a
-                            class="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                            href="#pablo"
-                        >
-                            <i
-                                class="fab fa-github text-lg leading-lg text-white opacity-75"
-                            />
-                        </a>
+                        <div class="dropdown dropdown-hover dropdown-end">
+                            <a
+                                class="px-3 py-1 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
+                                href="#pablo"
+                            >
+                                <i
+                                    class="fab fa-github text-lg leading-lg text-white opacity-75"
+                                />
+                            </a>
+                            <ul
+                                tabindex="0"
+                                class="p-0.5 shadow menu dropdown-content bg-base-100"
+                            >
+                                <li>
+                                    <a
+                                        @click="logout"
+                                        class="text-blue-500 text-lg py-0.5 px-1"
+                                        ><i
+                                            class="fa fa-lock text-lg text-blue-500 px-0.5"
+                                        />
+                                        Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
                 </ul>
             </div>
@@ -88,6 +105,11 @@ import { mapGetters } from "vuex";
 export default {
     components: {
         UserDropdownComponent,
+    },
+    methods: {
+        logout() {
+            this.$store.dispatch("auth/logout");
+        },
     },
     computed: {
         ...mapGetters({ user: "auth/authUser" }),

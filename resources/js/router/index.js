@@ -21,6 +21,7 @@ const routes = [
         name: "login",
         component: () => import("../views/Login.vue"),
         meta: {
+            layout: "full",
             redirectAfterAuth: true,
             public: true,
         },
@@ -30,6 +31,7 @@ const routes = [
         name: "register",
         component: () => import("../views/Register.vue"),
         meta: {
+            layout: "full",
             redirectAfterAuth: true,
             public: true,
         },
@@ -82,7 +84,7 @@ const router = new VueRouter({
 
 // router.beforeEach((to, from, next) => {
 //     console.log("HELPER STATE", isAuthentcated());
-//
+//R018980,R012020,R010523,R009956
 //     var isAuthenticated = isAuthentcated();
 //     console.log("LOGGED IN", isAuthenticated);
 //     if (!isAuthenticated && !to.meta.public) {

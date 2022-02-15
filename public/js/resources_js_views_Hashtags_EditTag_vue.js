@@ -107,6 +107,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -124,32 +129,34 @@ __webpack_require__.r(__webpack_exports__);
         user_id: "",
         tagid: ""
       },
-      //filteredtag: "",
+      filteredtag: "",
       errorMsg: ""
     };
   },
-  mounted: function mounted() {
-    //4211 2100 0074 4476
-    //console.log("param id", this.id);
-    // this.hashtag = this.filteredtag[0];
-    // this.hashtag.id = this.id;
-    this.hashtag.user_id = this.$store.getters["auth/authUser"].id;
+  created: function created() {
+    console.log("PROPDD", this.$props.id);
+    var tag = this.$store.getters["tags/filteredtag"](this.$props.id)[0];
+    console.log("TAGGG", tag);
+    this.hashtag = {
+      weekday: tag.weekday,
+      tags: tag.tags,
+      status: tag.status,
+      user_id: this.$store.getters["auth/authUser"].id
+    };
   },
-  computed: {
-    filteredtag: function filteredtag() {
-      var filteredtag = this.$store.getters["tags/filteredtag"](this.id);
-      console.log("FILTERED id", filteredtag);
-      return filteredtag;
-    }
+  computed: {// filteredtag() {
+    //     this.weekday =
+    //     return this.$store.getters["tags/filteredtag"](this.$props.id);
+    // },
   },
   methods: {
-    createtags: function createtags() {
+    updateTag: function updateTag() {
       var _this = this;
 
       this.$refs.tagValidation.validate().then(function (success) {
         if (success) {
-          _services_ApiService__WEBPACK_IMPORTED_MODULE_0__["default"].updateTag(_this.hashtag, _this.id).then(function (response) {
-            console.log("UPDATE-RESS", response.data.message);
+          _services_ApiService__WEBPACK_IMPORTED_MODULE_0__["default"].updateTag(_this.hashtag, _this.$props.id).then(function (response) {
+            _this.$store.dispatch("tags/getUserTags");
 
             _this.$swal("success", response.data.message, "success").then(function (res) {
               if (res.value) {
@@ -265,7 +272,15 @@ var render = function () {
           "div",
           { staticClass: "ui-form p-10" },
           [
-            _vm._m(0),
+            _c("span", { staticClass: "header-text mb-2" }, [
+              _c("p", { staticClass: "text-blue-400 text-2xl" }, [
+                _vm._v(
+                  "\n                        Editing HashTag ID " +
+                    _vm._s(_vm.id) +
+                    "\n                    "
+                ),
+              ]),
+            ]),
             _vm._v(" "),
             _c("ValidationObserver", {
               ref: "tagValidation",
@@ -281,7 +296,7 @@ var render = function () {
                           on: {
                             submit: function ($event) {
                               $event.preventDefault()
-                              return _vm.createtags.apply(null, arguments)
+                              return _vm.updateTag.apply(null, arguments)
                             },
                           },
                         },
@@ -554,20 +569,11 @@ var render = function () {
         ),
       ]),
     ]),
+    _vm._v(" "),
+    _c("pre", [_vm._v("        " + _vm._s(_vm.hashtag) + "\n    ")]),
   ])
 }
-var staticRenderFns = [
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "header-text mb-2" }, [
-      _c("p", { staticClass: "text-blue-400 text-2xl" }, [
-        _vm._v("Create HashTag"),
-      ]),
-    ])
-  },
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

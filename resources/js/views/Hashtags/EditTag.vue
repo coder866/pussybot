@@ -4,13 +4,15 @@
             <div class="overflow-hidden bg-white h-auto w-full">
                 <div class="ui-form p-10">
                     <span class="header-text mb-2">
-                        <p class="text-blue-400 text-2xl">Create HashTag</p>
+                        <p class="text-blue-400 text-2xl">
+                            Editing HashTag ID {{ id }}
+                        </p>
                     </span>
                     <ValidationObserver
                         v-slot="{ invalid }"
                         ref="tagValidation"
                     >
-                        <form @submit.prevent="createtags">
+                        <form @submit.prevent="updateTag">
                             <ValidationProvider
                                 v-slot="{ errors }"
                                 name="weekday"
@@ -90,6 +92,9 @@
                 </div>
             </div>
         </div>
+        <pre>
+            {{ hashtag }}
+        </pre>
     </div>
 </template>
 
@@ -110,34 +115,35 @@ export default {
                 user_id: "",
                 tagid: "",
             },
-            //filteredtag: "",
+            filteredtag: "",
             errorMsg: "",
         };
     },
-    mounted() {
-        //4211 2100 0074 4476
-        //console.log("param id", this.id);
-
-        // this.hashtag = this.filteredtag[0];
-        // this.hashtag.id = this.id;
-        this.hashtag.user_id = this.$store.getters["auth/authUser"].id;
+    created() {
+        console.log("PROPDD", this.$props.id);
+        var tag = this.$store.getters["tags/filteredtag"](this.$props.id)[0];
+        console.log("TAGGG", tag);
+        this.hashtag = {
+            weekday: tag.weekday,
+            tags: tag.tags,
+            status: tag.status,
+            user_id: this.$store.getters["auth/authUser"].id,
+        };
     },
     computed: {
-        filteredtag() {
-            let filteredtag = this.$store.getters["tags/filteredtag"](this.id);
-
-            console.log("FILTERED id", filteredtag);
-            return filteredtag;
-        },
+        // filteredtag() {
+        //     this.weekday =
+        //     return this.$store.getters["tags/filteredtag"](this.$props.id);
+        // },
     },
     methods: {
-        createtags() {
+        updateTag() {
             this.$refs.tagValidation.validate().then((success) => {
                 if (success) {
                     apiService
-                        .updateTag(this.hashtag, this.id)
+                        .updateTag(this.hashtag, this.$props.id)
                         .then((response) => {
-                            console.log("UPDATE-RESS", response.data.message);
+                            this.$store.dispatch("tags/getUserTags");
 
                             this.$swal(
                                 "success",
